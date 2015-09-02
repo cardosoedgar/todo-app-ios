@@ -14,6 +14,7 @@ class LaunchController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
         database.setToken("")
         var token = database.getToken()
         

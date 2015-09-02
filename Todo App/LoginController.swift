@@ -19,6 +19,10 @@ class LoginController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         database = UserDefaultsDatabase()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         hideNavBar()
     }
     
@@ -32,6 +36,11 @@ class LoginController: UIViewController {
                 requestLogin(email, password: password)
             }
         }
+    }
+    
+    @IBAction func dontWantToSignUp(sender: UIButton) {
+        database?.setToken("not signed")
+        presentListController()
     }
     
     func requestLogin(email: String, password: String) {
@@ -58,6 +67,11 @@ class LoginController: UIViewController {
     
     func saveToken(token: String?) {
         self.database?.setToken(token)
+    }
+    
+    func presentListController() {
+        let tabBarController = storyboard?.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
+        navigationController?.pushViewController(tabBarController, animated: true)
     }
     
     func presentListController(lists : [List]?) {

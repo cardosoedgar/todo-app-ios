@@ -120,6 +120,9 @@
                                     <color key="titleColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="dontWantToSignUp:" destination="rBh-Vq-Q83" eventType="touchUpInside" id="8CS-sz-VHu"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="llu-Wr-RBS">
                                 <rect key="frame" x="0.0" y="292" width="600" height="48"/>
@@ -143,6 +146,9 @@
                                     <color key="titleColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <segue destination="xhN-Ix-pEX" kind="show" id="XMx-q6-AQe"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -263,7 +269,75 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x2r-Vp-uXa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2613" y="-1789.5"/>
+            <point key="canvasLocation" x="2537" y="-1854"/>
+        </scene>
+        <!--Forgot Password Controller-->
+        <scene sceneID="bbf-ud-YRM">
+            <objects>
+                <viewController storyboardIdentifier="ForgotPasswordController" id="xhN-Ix-pEX" customClass="ForgotPasswordController" customModule="Todo_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="WZP-Sm-Y5O"/>
+                        <viewControllerLayoutGuide type="bottom" id="cDV-m6-9eg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="DLo-l3-gkF">
+                        <rect key="frame" x="0.0" y="64" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" minimumFontSize="17" background="background_textfield_login" translatesAutoresizingMaskIntoConstraints="NO" id="gRF-WG-WhF" customClass="CustomTextField" customModule="Todo_App" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="149" width="600" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="iM8-Km-8pB">
+                                        <variation key="heightClass=compact-widthClass=compact" constant="40"/>
+                                    </constraint>
+                                </constraints>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U2N-d8-orm">
+                                <rect key="frame" x="0.0" y="199" width="600" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="gr0-sC-V3r">
+                                        <variation key="heightClass=compact-widthClass=compact" constant="40"/>
+                                    </constraint>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                <state key="normal" title="Submit" backgroundImage="background_button_login">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="login:" destination="rBh-Vq-Q83" eventType="touchUpInside" id="1tE-Ou-88G"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Request New Password" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jRx-eu-Lhp">
+                                <rect key="frame" x="186" y="70" width="228" height="24"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
+                                <color key="textColor" red="1" green="0.52145291910000002" blue="0.3728048243" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="jRx-eu-Lhp" firstAttribute="top" secondItem="WZP-Sm-Y5O" secondAttribute="bottom" constant="50" id="8FC-dP-xkL"/>
+                            <constraint firstAttribute="trailing" secondItem="gRF-WG-WhF" secondAttribute="trailing" id="Aob-OT-8oX"/>
+                            <constraint firstAttribute="centerX" secondItem="jRx-eu-Lhp" secondAttribute="centerX" id="BQI-45-78i"/>
+                            <constraint firstItem="U2N-d8-orm" firstAttribute="leading" secondItem="DLo-l3-gkF" secondAttribute="leading" id="bJr-Hl-0nB"/>
+                            <constraint firstItem="U2N-d8-orm" firstAttribute="top" secondItem="gRF-WG-WhF" secondAttribute="bottom" id="cUF-gA-ZAb"/>
+                            <constraint firstItem="gRF-WG-WhF" firstAttribute="top" secondItem="jRx-eu-Lhp" secondAttribute="bottom" constant="55" id="rwR-5X-Otr"/>
+                            <constraint firstItem="gRF-WG-WhF" firstAttribute="top" secondItem="WZP-Sm-Y5O" secondAttribute="bottom" constant="120" id="uBb-fa-T9T"/>
+                            <constraint firstAttribute="trailing" secondItem="U2N-d8-orm" secondAttribute="trailing" id="v50-et-ppm"/>
+                            <constraint firstItem="gRF-WG-WhF" firstAttribute="leading" secondItem="DLo-l3-gkF" secondAttribute="leading" id="zzA-mh-TUd"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="uBb-fa-T9T"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Goz-hU-XbN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3228" y="-1854"/>
         </scene>
         <!--Launch Controller-->
         <scene sceneID="azH-13-TpF">
