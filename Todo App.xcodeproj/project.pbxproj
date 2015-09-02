@@ -11,6 +11,7 @@
 		6C5980F01B9645ED0043B161 /* LaunchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5980EF1B9645ED0043B161 /* LaunchController.swift */; };
 		6C5980F21B9733990043B161 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5980F11B9733990043B161 /* SettingsController.swift */; };
 		6C5980F41B9738900043B161 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5980F31B9738900043B161 /* TabBarController.swift */; };
+		6C5980F71B977EE00043B161 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5980F61B977EE00043B161 /* CustomTextField.swift */; };
 		6C952B8D1B94911400EBF38C /* ListsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C952B8C1B94911400EBF38C /* ListsController.swift */; };
 		6C952B8F1B94C39000EBF38C /* DatabaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C952B8E1B94C39000EBF38C /* DatabaseProtocol.swift */; };
 		6C952B911B94C42B00EBF38C /* UserDefaultsDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C952B901B94C42B00EBF38C /* UserDefaultsDatabase.swift */; };
@@ -42,6 +43,7 @@
 		6C5980EF1B9645ED0043B161 /* LaunchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LaunchController.swift; path = ../LaunchController.swift; sourceTree = "<group>"; };
 		6C5980F11B9733990043B161 /* SettingsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		6C5980F31B9738900043B161 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		6C5980F61B977EE00043B161 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		6C952B8C1B94911400EBF38C /* ListsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListsController.swift; sourceTree = "<group>"; };
 		6C952B8E1B94C39000EBF38C /* DatabaseProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseProtocol.swift; sourceTree = "<group>"; };
 		6C952B901B94C42B00EBF38C /* UserDefaultsDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsDatabase.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 		6C5980F51B97390B0043B161 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				6C5980F61B977EE00043B161 /* CustomTextField.swift */,
 				6CE1B27B1B94832800B40345 /* Images.xcassets */,
 				6C5980EF1B9645ED0043B161 /* LaunchController.swift */,
 				6C5980F31B9738900043B161 /* TabBarController.swift */,
@@ -349,6 +352,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C5980F71B977EE00043B161 /* CustomTextField.swift in Sources */,
 				6C952B8F1B94C39000EBF38C /* DatabaseProtocol.swift in Sources */,
 				6CE1B2751B94832800B40345 /* AppDelegate.swift in Sources */,
 				6C3E2F591B94F0B1000824F4 /* LoginResponse.swift in Sources */,
