@@ -15,7 +15,10 @@ class ForgotPasswordController: UIViewController {
         
         setNavBarVisible()
         setNavBarTransparent()
+        setTapAnyWhereToDismissKeyboard()
     }
+    
+    //MARK: - UI Components
     
     func setNavBarVisible() {
         navigationController?.navigationBarHidden = false
@@ -25,5 +28,14 @@ class ForgotPasswordController: UIViewController {
         navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.translucent = true
+    }
+    
+    func setTapAnyWhereToDismissKeyboard() {
+        var tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        view.addGestureRecognizer(tap)
+    }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
     }
 }

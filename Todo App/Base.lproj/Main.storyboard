@@ -24,7 +24,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G6o-oS-PWS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2702" y="-1028"/>
+            <point key="canvasLocation" x="2700" y="-980"/>
         </scene>
         <!--SettingsController-->
         <scene sceneID="yeK-at-i8x">
@@ -85,13 +85,20 @@
                                 </constraints>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="rBh-Vq-Q83" id="Nbh-Tb-2YA"/>
+                                    <outlet property="nextField" destination="J26-IR-MqN" id="dU9-3a-OK6"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" background="background_textfield_login" translatesAutoresizingMaskIntoConstraints="NO" id="J26-IR-MqN" customClass="CustomTextField" customModule="Todo_App" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="194" width="600" height="50"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="go" secureTextEntry="YES"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="go" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="rBh-Vq-Q83" id="BCh-jM-ois"/>
+                                </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Another Todo App" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MF0-eW-w0J">
                                 <rect key="frame" x="176" y="60" width="241" height="34"/>
@@ -139,6 +146,9 @@
                                         <exclude reference="DSP-BF-cJf"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <action selector="signUp:" destination="rBh-Vq-Q83" eventType="touchUpInside" id="Vo3-ol-RzQ"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YOo-yo-Ooj">
                                 <rect key="frame" x="233" y="348" width="126" height="30"/>
@@ -147,7 +157,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="xhN-Ix-pEX" kind="show" id="XMx-q6-AQe"/>
+                                    <action selector="forgotPassword:" destination="rBh-Vq-Q83" eventType="touchUpInside" id="k1l-T4-FOo"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -216,12 +226,12 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="nmO-vW-Lq5"/>
                                 <exclude reference="KFT-rc-jGc"/>
                                 <exclude reference="TxX-SY-Qrh"/>
                                 <exclude reference="ecw-ar-PEl"/>
                                 <exclude reference="nZ1-3o-IVY"/>
                                 <exclude reference="qoZ-xq-2Mn"/>
+                                <exclude reference="nmO-vW-Lq5"/>
                                 <exclude reference="4uy-T1-trY"/>
                                 <exclude reference="Gjj-ac-rbT"/>
                                 <exclude reference="jBf-T5-Fda"/>
@@ -337,7 +347,118 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Goz-hU-XbN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3228" y="-1854"/>
+            <point key="canvasLocation" x="3286" y="-2346"/>
+        </scene>
+        <!--Signup Controller-->
+        <scene sceneID="D0f-Us-FOL">
+            <objects>
+                <viewController storyboardIdentifier="SignUpController" id="qBb-GO-Tfy" customClass="SignupController" customModule="Todo_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nCF-2I-MGF"/>
+                        <viewControllerLayoutGuide type="bottom" id="8sF-8V-JQS"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="iHb-aL-Hjp">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name (Optional)" minimumFontSize="17" background="background_textfield_login" translatesAutoresizingMaskIntoConstraints="NO" id="V7U-IQ-eBi" customClass="CustomTextField" customModule="Todo_App" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="99" width="600" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="XS1-Ds-ILb">
+                                        <variation key="heightClass=compact-widthClass=compact" constant="40"/>
+                                    </constraint>
+                                </constraints>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="qBb-GO-Tfy" id="hep-Az-0Aq"/>
+                                    <outlet property="nextField" destination="b3R-cM-IFD" id="AFb-L4-Lsd"/>
+                                </connections>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" minimumFontSize="17" background="background_textfield_login" translatesAutoresizingMaskIntoConstraints="NO" id="b3R-cM-IFD" customClass="CustomTextField" customModule="Todo_App" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="149" width="600" height="50"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="qBb-GO-Tfy" id="aZp-sb-8aI"/>
+                                    <outlet property="nextField" destination="hT7-59-QGP" id="yWo-oy-fgk"/>
+                                </connections>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign Up" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="USZ-mr-95b">
+                                <rect key="frame" x="248" y="15" width="105" height="34"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="28"/>
+                                <color key="textColor" red="1" green="0.52145291910000002" blue="0.3728048243" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OJM-nJ-1cJ">
+                                <rect key="frame" x="0.0" y="249" width="600" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="5lm-FS-heu">
+                                        <variation key="heightClass=compact-widthClass=compact" constant="40"/>
+                                    </constraint>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                <state key="normal" title="Submit" backgroundImage="background_button_login">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="login:" destination="rBh-Vq-Q83" eventType="touchUpInside" id="eEs-i2-DEO"/>
+                                    <action selector="submitSignUp:" destination="qBb-GO-Tfy" eventType="touchUpInside" id="VfZ-6o-QbQ"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" background="background_textfield_login" translatesAutoresizingMaskIntoConstraints="NO" id="hT7-59-QGP" customClass="CustomTextField" customModule="Todo_App" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="199" width="600" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="OQL-pK-Gdw">
+                                        <variation key="heightClass=compact-widthClass=compact" constant="40"/>
+                                    </constraint>
+                                </constraints>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="go" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="qBb-GO-Tfy" id="Tfa-V1-ocN"/>
+                                </connections>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="b3R-cM-IFD" firstAttribute="height" secondItem="V7U-IQ-eBi" secondAttribute="height" id="6S2-4U-j7a"/>
+                            <constraint firstItem="hT7-59-QGP" firstAttribute="top" secondItem="b3R-cM-IFD" secondAttribute="bottom" id="7Xf-13-E1g"/>
+                            <constraint firstAttribute="trailing" secondItem="b3R-cM-IFD" secondAttribute="trailing" id="8nD-Y7-khW"/>
+                            <constraint firstItem="USZ-mr-95b" firstAttribute="top" secondItem="nCF-2I-MGF" secondAttribute="bottom" constant="-5" id="Ed0-mQ-t2O"/>
+                            <constraint firstItem="V7U-IQ-eBi" firstAttribute="leading" secondItem="iHb-aL-Hjp" secondAttribute="leading" id="Hqj-pt-64e"/>
+                            <constraint firstItem="b3R-cM-IFD" firstAttribute="leading" secondItem="iHb-aL-Hjp" secondAttribute="leading" id="IQP-8h-Kbt"/>
+                            <constraint firstAttribute="trailing" secondItem="OJM-nJ-1cJ" secondAttribute="trailing" id="MF0-X7-t8W"/>
+                            <constraint firstAttribute="trailing" secondItem="V7U-IQ-eBi" secondAttribute="trailing" id="PLP-Md-LME"/>
+                            <constraint firstItem="b3R-cM-IFD" firstAttribute="top" secondItem="V7U-IQ-eBi" secondAttribute="bottom" id="QFD-qr-Ide"/>
+                            <constraint firstItem="hT7-59-QGP" firstAttribute="leading" secondItem="iHb-aL-Hjp" secondAttribute="leading" id="TTu-IY-RcE"/>
+                            <constraint firstItem="OJM-nJ-1cJ" firstAttribute="top" secondItem="b3R-cM-IFD" secondAttribute="bottom" id="WCO-8x-JLX"/>
+                            <constraint firstItem="OJM-nJ-1cJ" firstAttribute="leading" secondItem="iHb-aL-Hjp" secondAttribute="leading" id="ZnA-iu-jok"/>
+                            <constraint firstItem="V7U-IQ-eBi" firstAttribute="top" secondItem="USZ-mr-95b" secondAttribute="bottom" constant="50" id="bgj-W4-5Gz"/>
+                            <constraint firstItem="OJM-nJ-1cJ" firstAttribute="top" secondItem="hT7-59-QGP" secondAttribute="bottom" id="jQb-OP-pgV"/>
+                            <constraint firstAttribute="centerX" secondItem="USZ-mr-95b" secondAttribute="centerX" id="qHj-4i-iGp"/>
+                            <constraint firstItem="V7U-IQ-eBi" firstAttribute="top" secondItem="USZ-mr-95b" secondAttribute="bottom" constant="50" id="v1i-D6-TQJ"/>
+                            <constraint firstAttribute="trailing" secondItem="hT7-59-QGP" secondAttribute="trailing" id="vmE-tP-qoH"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="v1i-D6-TQJ"/>
+                                <exclude reference="WCO-8x-JLX"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="tfEmail" destination="b3R-cM-IFD" id="KzS-tk-2E2"/>
+                        <outlet property="tfName" destination="V7U-IQ-eBi" id="Z2P-O2-QRK"/>
+                        <outlet property="tfPassword" destination="hT7-59-QGP" id="fm5-Ga-9i5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="utv-Ju-Ud9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3294" y="-1668"/>
         </scene>
         <!--Launch Controller-->
         <scene sceneID="azH-13-TpF">

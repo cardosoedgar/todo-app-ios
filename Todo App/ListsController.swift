@@ -17,7 +17,6 @@ class ListsController: UITableViewController {
         super.viewDidLoad()
         
         setUpTableView()
-        
     }
     
     override func viewWillAppear(animated: Bool) {

@@ -20,6 +20,8 @@ class SettingsController: UIViewController {
         setUpNavBar()
     }
     
+    //MARK: - UI Components
+    
     func setUpNavBar() {
         tabBarController?.title = "Settings"
         hideBackButton()

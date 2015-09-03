@@ -9,7 +9,7 @@
 import UIKit
 
 class CustomTextField: UITextField {
-
+    
     var inset: CGFloat = 20
 
     required init(coder aDecoder: NSCoder) {
@@ -29,6 +29,17 @@ class CustomTextField: UITextField {
         super.editingRectForBounds(bounds)
         return CGRectInset(bounds, inset, 0)
     }
-    
-    
+}
+
+private var kAssociationKeyNextField: UInt8 = 0
+
+extension UITextField {
+    @IBOutlet var nextField: UITextField? {
+        get {
+            return objc_getAssociatedObject(self, &kAssociationKeyNextField) as? UITextField
+        }
+        set(newField) {
+            objc_setAssociatedObject(self, &kAssociationKeyNextField, newField, UInt(OBJC_ASSOCIATION_RETAIN))
+        }
+    }
 }
