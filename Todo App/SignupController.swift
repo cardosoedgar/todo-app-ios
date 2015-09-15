@@ -60,23 +60,23 @@ class SignupController: UIViewController, UITextFieldDelegate {
     func requestSignUp(email: String, password: String, name: String) {
         let params = [ "email" : email, "password" : password, "name" : name ]
         
-        Alamofire.request(.POST, "http://localhost:8080/signup", parameters: params)
-            .responseObject { (response: LoginResponse?, error: NSError?) in
-                if response == nil {
-                    self.createAlertWithTitle("Error", message: "Can't connect to the server. Check your internet connection")
-                    return
-                }
-                
-                if let success = response?.success {
-                    if !success {
-                        self.createAlertWithTitle("Error", message: response?.message)
-                        return
-                    }
-                    
-                    self.loginController?.setRegisteredEmail(email)
-                    self.navigationController?.popViewControllerAnimated(true)
-                }
-        }
+//        Alamofire.request(.POST, "http://localhost:8080/signup", parameters: params)
+//            .responseObject { (response: LoginResponse?, error: NSError?) in
+//                if response == nil {
+//                    self.createAlertWithTitle("Error", message: "Can't connect to the server. Check your internet connection")
+//                    return
+//                }
+//                
+//                if let success = response?.success {
+//                    if !success {
+//                        self.createAlertWithTitle("Error", message: response?.message)
+//                        return
+//                    }
+//                    
+//                    self.loginController?.setRegisteredEmail(email)
+//                    self.navigationController?.popViewControllerAnimated(true)
+//                }
+//        }
     }
     
     func createAlertWithTitle(title: String?, message: String?) {

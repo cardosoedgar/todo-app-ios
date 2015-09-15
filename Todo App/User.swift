@@ -1,27 +1,28 @@
 //
 //  User.swift
-//  Todo App
+//  
 //
-//  Created by Edgar Cardoso on 8/31/15.
-//  Copyright (c) 2015 Edgar Cardoso. All rights reserved.
+//  Created by Edgar Cardoso on 9/15/15.
 //
-import ObjectMapper
+//
 import Foundation
+import CoreData
 
-class User: Mappable {
-    var id: String?
-    var email: String?
-    var name: String?
-    var token: String?
-    
-    class func newInstance(map: Map) -> Mappable? {
-        return User()
-    }
-    
-    func mapping(map: Map) {
-        id <- map["user.id"]
-        name <- map["user.name"]
-        email <- map["user.email"]
-        token <- map["token"]
+class User: NSManagedObject {
+
+    @NSManaged var email: String
+    @NSManaged var id: String
+    @NSManaged var name: String
+    @NSManaged var lists: NSOrderedSet
+
+    class func userFromJSON(json: NSDictionary, andContext context: NSManagedObjectContext) -> User {
+        let userEntity = NSEntityDescription.entityForName("User", inManagedObjectContext: context)
+        let user = User(entity: userEntity!, insertIntoManagedObjectContext: context)
+        
+        user.email = json["email"] as! String
+        user.id = json["id"] as! String
+        user.name = json["name"] as! String
+        
+        return user
     }
 }

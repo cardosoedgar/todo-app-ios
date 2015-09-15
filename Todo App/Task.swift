@@ -1,24 +1,27 @@
 //
 //  Task.swift
-//  Todo App
+//  
 //
-//  Created by Edgar Cardoso on 8/31/15.
-//  Copyright (c) 2015 Edgar Cardoso. All rights reserved.
+//  Created by Edgar Cardoso on 9/15/15.
+//
 //
 
 import Foundation
-import ObjectMapper
+import CoreData
 
-class Task : Mappable {
-    var id: Int?
-    var name: String?
-    
-    class func newInstance(map: Map) -> Mappable? {
-        return Task()
-    }
-    
-    func mapping(map: Map) {
-        id <- map["id"]
-        name <- map["name"]
+class Task: NSManagedObject {
+
+    @NSManaged var id: NSNumber
+    @NSManaged var name: String
+    @NSManaged var list: List
+
+    class func taskFromJSON(json: NSDictionary, andContext context: NSManagedObjectContext) -> Task {
+        let taskEntity = NSEntityDescription.entityForName("Task", inManagedObjectContext: context)
+        let task = Task(entity: taskEntity!, insertIntoManagedObjectContext: context)
+        
+        task.id = json["id"] as! NSNumber
+        task.name = json["name"] as! String
+        
+        return task
     }
 }

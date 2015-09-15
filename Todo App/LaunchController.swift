@@ -11,18 +11,20 @@ import UIKit
 class LaunchController: UIViewController {
 
     let database = UserDefaultsDatabase()
+    lazy var coreDataStack = CoreDataStackManager()
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        database.setToken("")
         var token = database.getToken()
         
-        if token != "" {
-            let tabBarController = storyboard?.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
-            navigationController?.pushViewController(tabBarController, animated: true)
+        if token != nil && token != "" {
+            let listsVC = storyboard?.instantiateViewControllerWithIdentifier("ListsController") as! ListsController
+            listsVC.coreDataStack = coreDataStack
+            navigationController?.pushViewController(listsVC, animated: true)
         } else {
             var loginVC = storyboard?.instantiateViewControllerWithIdentifier("LoginController") as! LoginController
+            loginVC.coreDataStack = coreDataStack
             navigationController?.pushViewController(loginVC, animated: true)
         }
     }

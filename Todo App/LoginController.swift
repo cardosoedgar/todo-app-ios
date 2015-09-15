@@ -5,17 +5,17 @@
 //  Created by Edgar Cardoso on 8/31/15.
 //  Copyright (c) 2015 Edgar Cardoso. All rights reserved.
 //
-
+import CoreData
 import UIKit
 import Alamofire
-import AlamofireObjectMapper
 
 protocol SignUpProtocol : class {
     func setRegisteredEmail(name: String?)
 }
 
 class LoginController: UIViewController, SignUpProtocol, UITextFieldDelegate {
-
+    
+    var coreDataStack: CoreDataStackManager!
     var database: DatabaseProtocol?
     @IBOutlet weak var tfEmail: UITextField!
     @IBOutlet weak var tfPassword: UITextField!
@@ -75,20 +75,49 @@ class LoginController: UIViewController, SignUpProtocol, UITextFieldDelegate {
         let params = [ "email" : email, "password" : password ]
         
         Alamofire.request(.POST, "http://localhost:8080/login", parameters: params)
-            .responseObject { (response: LoginResponse?, error: NSError?) in
-                if response == nil {
+            .responseJSON { request, response, JSON, error in
+                if JSON == nil {
                     self.createAlertWithMessage("Can't connect to the server. Check your internet connection")
                     return
                 }
                 
-                if let success = response?.success {
+                if let success = JSON?.valueForKey("success") as? Bool {
                     if !success {
-                        self.createAlertWithMessage(response?.message)
+                        let message = JSON?.valueForKey("message") as? String
+                        self.createAlertWithMessage(message)
                         return
                     }
                     
-                    self.saveToken(response?.token)
-                    self.presentListController(response?.lists)
+                    let token = JSON?.valueForKey("token") as? String
+                    self.saveToken(token)
+                    
+                    var user: User!
+                    if let userDict = JSON?.valueForKey("user") as? NSDictionary{
+                        user = User.userFromJSON(userDict, andContext: self.coreDataStack.context)
+                    }
+                    
+                    if let listsArray = JSON?.valueForKey("lists") as? NSArray {
+                        for listDict in listsArray {
+                            var list = List.listFromJSON(listDict as! NSDictionary, andContext: self.coreDataStack.context)
+                            
+                            if let tasksArray = listDict["Tasks"] as? NSArray {
+                                for taskDict in tasksArray {
+                                    var task = Task.taskFromJSON(taskDict as! NSDictionary, andContext: self.coreDataStack.context)
+                                    
+                                    var tasks = list.tasks.mutableCopy() as! NSMutableOrderedSet
+                                    tasks.addObject(task)
+                                    list.tasks = tasks as NSOrderedSet
+                                }
+                            }
+                            
+                            var lists = user.lists.mutableCopy() as! NSMutableOrderedSet
+                            lists.addObject(list)
+                            user.lists = lists as NSOrderedSet
+                        }
+                    }
+                    
+                    self.coreDataStack.saveContext()
+                    self.presentListController(user)
                 }
         }
     }
@@ -137,16 +166,13 @@ class LoginController: UIViewController, SignUpProtocol, UITextFieldDelegate {
     }
     
     func presentListController() {
-        let tabBarController = storyboard?.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
-        navigationController?.pushViewController(tabBarController, animated: true)
+        let listsController = storyboard?.instantiateViewControllerWithIdentifier("ListsController") as! ListsController
+        navigationController?.pushViewController(listsController, animated: true)
     }
     
-    func presentListController(lists : [List]?) {
-        let tabBarController = storyboard?.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
-        let listsController = tabBarController.viewControllers?.filter({ (v) -> Bool in
-            return (v is ListsController)
-        })[0] as! ListsController
-        listsController.list = lists!
-        navigationController?.pushViewController(tabBarController, animated: true)
+    func presentListController(user : User) {
+        let listsController = storyboard?.instantiateViewControllerWithIdentifier("ListsController") as! ListsController
+        listsController.currentUser = user
+        navigationController?.pushViewController(listsController, animated: true)
     }
 }

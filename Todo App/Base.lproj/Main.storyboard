@@ -18,13 +18,30 @@
                             <outlet property="delegate" destination="gwz-EF-O65" id="w53-Fv-sdp"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="Lists" image="list_icon" id="8Bw-5g-bBS"/>
                     <navigationItem key="navigationItem" title="Lists" id="QMF-RL-6vL"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G6o-oS-PWS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2700" y="-980"/>
+            <point key="canvasLocation" x="2466" y="-1062"/>
+        </scene>
+        <!--Tasks Controller-->
+        <scene sceneID="XZQ-LK-1IV">
+            <objects>
+                <tableViewController storyboardIdentifier="TasksController" id="jbf-0g-taB" customClass="TasksController" customModule="Todo_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="gFq-0y-cnk">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="dataSource" destination="jbf-0g-taB" id="64k-bW-4BF"/>
+                            <outlet property="delegate" destination="jbf-0g-taB" id="5pg-dQ-JxR"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jsr-JJ-4L8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3214" y="-1044"/>
         </scene>
         <!--SettingsController-->
         <scene sceneID="yeK-at-i8x">
@@ -43,26 +60,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lmH-RD-D9j" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2688" y="-255"/>
-        </scene>
-        <!--Tab Bar Controller-->
-        <scene sceneID="ah9-Sk-UrJ">
-            <objects>
-                <tabBarController storyboardIdentifier="TabBarController" id="PRt-Jz-WUi" customClass="TabBarController" customModule="Todo_App" customModuleProvider="target" sceneMemberID="viewController">
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" id="XCB-Gn-D3o">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    </tabBar>
-                    <connections>
-                        <segue destination="gwz-EF-O65" kind="relationship" relationship="viewControllers" id="PgB-pm-c8N"/>
-                        <segue destination="A8f-dc-f7j" kind="relationship" relationship="viewControllers" id="6du-bV-MJw"/>
-                    </connections>
-                </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7Ky-wE-e0m" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1939" y="-594"/>
+            <point key="canvasLocation" x="2446" y="-293"/>
         </scene>
         <!--Login Controller-->
         <scene sceneID="dvM-4V-6Dh">
@@ -279,7 +277,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x2r-Vp-uXa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2537" y="-1854"/>
+            <point key="canvasLocation" x="2505" y="-1866"/>
         </scene>
         <!--Forgot Password Controller-->
         <scene sceneID="bbf-ud-YRM">
@@ -361,7 +359,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name (Optional)" minimumFontSize="17" background="background_textfield_login" translatesAutoresizingMaskIntoConstraints="NO" id="V7U-IQ-eBi" customClass="CustomTextField" customModule="Todo_App" customModuleProvider="target">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name (optional)" minimumFontSize="17" background="background_textfield_login" translatesAutoresizingMaskIntoConstraints="NO" id="V7U-IQ-eBi" customClass="CustomTextField" customModule="Todo_App" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="99" width="600" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="XS1-Ds-ILb">
@@ -477,7 +475,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sQs-NM-8oP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1818" y="-1382"/>
+            <point key="canvasLocation" x="1674" y="-1602"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="4Cr-ga-MSJ">
@@ -493,14 +491,13 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="roR-IB-IqF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1094" y="-1376"/>
+            <point key="canvasLocation" x="934" y="-1612"/>
         </scene>
     </scenes>
     <resources>
         <image name="background_button_login" width="375" height="48"/>
         <image name="background_button_login2" width="375" height="48"/>
         <image name="background_textfield_login" width="625" height="50"/>
-        <image name="list_icon" width="50" height="50"/>
         <image name="settings_icon" width="50" height="50"/>
     </resources>
 </document>
