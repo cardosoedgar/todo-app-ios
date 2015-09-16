@@ -11,9 +11,7 @@ import Foundation
 class UserDefaultsDatabase: DatabaseProtocol
 {
     func setToken(token: String?) {
-        if token != nil {
-            NSUserDefaults.standardUserDefaults().setValue(token, forKey: "token")
-        }
+        NSUserDefaults.standardUserDefaults().setValue(token, forKey: "token")
     }
     
     func getToken() -> String? {
@@ -31,5 +29,9 @@ class UserDefaultsDatabase: DatabaseProtocol
         } else {
             return User()
         }
+    }
+    
+    func deleteToken() {
+        setToken(nil)
     }
 }

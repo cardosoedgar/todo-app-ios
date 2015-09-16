@@ -8,8 +8,16 @@
 
 import UIKit
 
+protocol LogoutProtocol: class {
+    func didLogout()
+}
+
 class SettingsController: UIViewController {
 
+    var database = UserDefaultsDatabase()
+    var coreDataStack: CoreDataStackManager!
+    var delegate: LogoutProtocol!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -23,20 +31,24 @@ class SettingsController: UIViewController {
     //MARK: - UI Components
     
     func setUpNavBar() {
-        tabBarController?.title = "Settings"
-        hideBackButton()
-        addRightNavBarButton()
-    }
-    
-    func hideBackButton() {
-        let backButton = UIBarButtonItem(title: "", style: .Plain, target: self, action: nil)
-        tabBarController?.navigationItem.leftBarButtonItem = backButton
-    }
-    
-    func addRightNavBarButton() {
-        let rightButton = UIBarButtonItem(title: "", style: .Plain, target: self, action: nil)
-        tabBarController?.navigationItem.rightBarButtonItem = rightButton
+        title = "Settings"
+        navigationController?.navigationBarHidden = false
+        
     }
 
+    @IBAction func closeSettings(sender: AnyObject) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
 
+    @IBAction func logout(sender: AnyObject) {
+        deleteUser()
+        database.deleteToken()
+        delegate.didLogout()
+    }
+    
+    func deleteUser() {
+        let user = database.getUser(coreDataStack.context)
+        coreDataStack.context.deleteObject(user)
+        coreDataStack.saveContext()
+    }
 }

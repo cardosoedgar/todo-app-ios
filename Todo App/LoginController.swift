@@ -167,12 +167,14 @@ class LoginController: UIViewController, SignUpProtocol, UITextFieldDelegate {
     
     func presentListController() {
         let listsController = storyboard?.instantiateViewControllerWithIdentifier("ListsController") as! ListsController
+        listsController.coreDataStack = coreDataStack
         navigationController?.pushViewController(listsController, animated: true)
     }
     
     func presentListController(user : User) {
         let listsController = storyboard?.instantiateViewControllerWithIdentifier("ListsController") as! ListsController
         listsController.currentUser = user
+        listsController.coreDataStack = coreDataStack
         navigationController?.pushViewController(listsController, animated: true)
     }
 }

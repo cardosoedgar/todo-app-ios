@@ -8,7 +8,7 @@
 import CoreData
 import UIKit
 
-class ListsController: UITableViewController {
+class ListsController: UITableViewController, LogoutProtocol {
     
     var coreDataStack : CoreDataStackManager!
     var currentUser : User!
@@ -64,10 +64,18 @@ class ListsController: UITableViewController {
     
     func presentSettingsController() {
         var settingsVC = storyboard?.instantiateViewControllerWithIdentifier("SettingsController") as! SettingsController
-        settingsVC.modalPresentationStyle = .FullScreen
-        settingsVC.modalTransitionStyle = .CoverVertical
+        settingsVC.delegate = self
+        settingsVC.coreDataStack = coreDataStack
         presentViewController(settingsVC, animated: true, completion: nil)
 
+    }
+    
+    // MARK: - Logout Protocol
+    
+    func didLogout() {
+        dismissViewControllerAnimated(true, completion: { () -> Void in
+            navigationController?.popToRootViewControllerAnimated(true)
+        })
     }
 
     // MARK: - Table view data source
