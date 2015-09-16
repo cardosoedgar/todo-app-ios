@@ -16,58 +16,41 @@ class ListsController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpTableView()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
         setUpNavBar()
+        
         if currentUser == nil {
-            getUser()
+            loadUser()
         }
     }
     
     // MARK: - UI Componentes
     
-    func getUser() {
-        let userFetch = NSFetchRequest(entityName: "User")
-        var error: NSError?
-        
-        let result = coreDataStack.context.executeFetchRequest(userFetch, error: &error) as! [User]?
-        
-        if let users = result {
-            currentUser = users.first
-            tableView.reloadData()
-        } else {
-            println("error")
-        }
-    }
-    
-    func setUpTableView() {
-        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
+    func loadUser() {
+        currentUser = database.getUser(coreDataStack.context)
+        tableView.reloadData()
     }
     
     func setUpNavBar() {
         title = "Lists"
         navigationController?.navigationBarHidden = false
-        hideBackButton()
-        addRightNavBarButtons()
+        addNavBarButtons()
     }
     
-    func hideBackButton() {
-        let backButton = UIBarButtonItem(title: "", style: .Plain, target: self, action: nil)
-        navigationItem.leftBarButtonItem = backButton
-    }
-    
-    func addRightNavBarButtons() {
+    func addNavBarButtons() {
         let addButton = createNewListButton()
+        navigationItem.rightBarButtonItem = addButton
+        
         let settingsButton = createSettingsButton()
-        navigationItem.rightBarButtonItems = [settingsButton, addButton]
+        navigationItem.leftBarButtonItem = settingsButton
     }
     
     func createNewListButton() -> UIBarButtonItem{
-        return UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addNewList:")
+        return UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addNewList")
     }
     
     func createSettingsButton() -> UIBarButtonItem {
@@ -75,7 +58,7 @@ class ListsController: UITableViewController {
         return UIBarButtonItem(image: icon, style: .Plain, target: self, action: "presentSettingsController")
     }
     
-    func addNewList(sender: AnyObject?) {
+    func addNewList() {
         
     }
     
@@ -104,11 +87,12 @@ class ListsController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("UITableViewCell", forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("listCell", forIndexPath: indexPath) as! ListsTableViewCell
         
         let list = currentUser.lists[indexPath.row] as! List
-        cell.textLabel?.text = list.name
-
+        cell.labelName?.text = list.name
+        cell.labelNumberTasks?.text = "\(list.tasks.count) tasks"
+        
         return cell
     }
     

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		6C0436E91B9791B300A51C35 /* ForgotPasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0436E81B9791B300A51C35 /* ForgotPasswordController.swift */; };
 		6C0CD1F31B9879ED009B2EBE /* SignupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0CD1F21B9879ED009B2EBE /* SignupController.swift */; };
+		6C41A7F81BA9A7B700B748C1 /* ListsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C41A7F71BA9A7B700B748C1 /* ListsTableViewCell.swift */; };
+		6C41A7FA1BA9ABFF00B748C1 /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C41A7F91BA9ABFF00B748C1 /* TaskTableViewCell.swift */; };
 		6C5980F21B9733990043B161 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5980F11B9733990043B161 /* SettingsController.swift */; };
 		6C5980F71B977EE00043B161 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5980F61B977EE00043B161 /* CustomTextField.swift */; };
 		6C6DF4311BA854F4008CBDCC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6DF42F1BA854F4008CBDCC /* User.swift */; };
@@ -44,6 +46,8 @@
 		553D90A8422765679B0027B0 /* Pods-Todo App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Todo App.release.xcconfig"; path = "Pods/Target Support Files/Pods-Todo App/Pods-Todo App.release.xcconfig"; sourceTree = "<group>"; };
 		6C0436E81B9791B300A51C35 /* ForgotPasswordController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordController.swift; sourceTree = "<group>"; };
 		6C0CD1F21B9879ED009B2EBE /* SignupController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupController.swift; sourceTree = "<group>"; };
+		6C41A7F71BA9A7B700B748C1 /* ListsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListsTableViewCell.swift; sourceTree = "<group>"; };
+		6C41A7F91BA9ABFF00B748C1 /* TaskTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 		6C5980F11B9733990043B161 /* SettingsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		6C5980F61B977EE00043B161 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		6C6DF42F1BA854F4008CBDCC /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -162,6 +166,8 @@
 				6C0436E81B9791B300A51C35 /* ForgotPasswordController.swift */,
 				6C0CD1F21B9879ED009B2EBE /* SignupController.swift */,
 				6CE1B2781B94832800B40345 /* Main.storyboard */,
+				6C41A7F71BA9A7B700B748C1 /* ListsTableViewCell.swift */,
+				6C41A7F91BA9ABFF00B748C1 /* TaskTableViewCell.swift */,
 				6C5980F51B97390B0043B161 /* Other */,
 				6CE1B2721B94832800B40345 /* Supporting Files */,
 			);
@@ -363,11 +369,13 @@
 			files = (
 				6C6DF4341BA8552A008CBDCC /* LaunchController.swift in Sources */,
 				6C5980F71B977EE00043B161 /* CustomTextField.swift in Sources */,
+				6C41A7FA1BA9ABFF00B748C1 /* TaskTableViewCell.swift in Sources */,
 				6C6DF4321BA854F4008CBDCC /* List.swift in Sources */,
 				6C952B8F1B94C39000EBF38C /* DatabaseProtocol.swift in Sources */,
 				6CE1B2751B94832800B40345 /* AppDelegate.swift in Sources */,
 				6C0CD1F31B9879ED009B2EBE /* SignupController.swift in Sources */,
 				6C0436E91B9791B300A51C35 /* ForgotPasswordController.swift in Sources */,
+				6C41A7F81BA9A7B700B748C1 /* ListsTableViewCell.swift in Sources */,
 				6C952B911B94C42B00EBF38C /* UserDefaultsDatabase.swift in Sources */,
 				6C6DF4361BA89D23008CBDCC /* Task.swift in Sources */,
 				6CB544671B9F167800E78B0B /* Model.xcdatamodeld in Sources */,
