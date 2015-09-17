@@ -9,10 +9,10 @@
 "J26-IR-MqN.placeholder" = "Senha";
 
 /* Class = "UILabel"; text = "Another Todo App"; ObjectID = "MF0-eW-w0J"; */
-"MF0-eW-w0J.text" = "Outro Todo App";
+"MF0-eW-w0J.text" = "Another Todo App";
 
 /* Class = "UIButton"; normalTitle = "Logout"; ObjectID = "ODs-jP-XNs"; */
-"ODs-jP-XNs.normalTitle" = "Logout";
+"ODs-jP-XNs.normalTitle" = "Deslogar";
 
 /* Class = "UIButton"; normalTitle = "Submit"; ObjectID = "OJM-nJ-1cJ"; */
 "OJM-nJ-1cJ.normalTitle" = "Enviar";
@@ -30,7 +30,7 @@
 "USZ-mr-95b.text" = "Cadastrar";
 
 /* Class = "UITextField"; placeholder = "Name (optional)"; ObjectID = "V7U-IQ-eBi"; */
-"V7U-IQ-eBi.placeholder" = "Nome (optional)";
+"V7U-IQ-eBi.placeholder" = "Nome (opcional)";
 
 /* Class = "UIButton"; normalTitle = "Forgot Password?"; ObjectID = "YOo-yo-Ooj"; */
 "YOo-yo-Ooj.normalTitle" = "Esqueceu a senha?";

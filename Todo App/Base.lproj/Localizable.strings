@@ -1,0 +1,11 @@
+/* 
+  Localizable.strings
+  Todo App
+
+  Created by Edgar Cardoso on 9/17/15.
+  Copyright © 2015 Edgar Cardoso. All rights reserved.
+*/
+"listViewTitle" = "Lists";
+"taskViewTitle" = "Tasks";
+"tasksLabel" = "tasks";
+"addListPlaceholder" = "new list";

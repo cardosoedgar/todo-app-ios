@@ -23,7 +23,7 @@ class TasksController: UITableViewController {
     }
     
     func setUpNavBar() {
-        title = "Tasks"
+        title = NSLocalizedString("taskViewTitle", comment: "")
         navigationController?.navigationBarHidden = false
         navigationItem.rightBarButtonItem = createNewListButton()
     }
