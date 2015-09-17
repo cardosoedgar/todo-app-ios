@@ -18,15 +18,14 @@ class UserDefaultsDatabase: DatabaseProtocol
         return NSUserDefaults.standardUserDefaults().valueForKey("token") as? String
     }
     
-    func getUser(context: NSManagedObjectContext) -> User {
+    func getUser(context: NSManagedObjectContext) -> User? {
         let userFetch = NSFetchRequest(entityName: "User")
-        var error: NSError?
         
-        let result = context.executeFetchRequest(userFetch, error: &error) as! [User]?
-        
-        if let users = result {
-            return users.first!
-        } else {
+        do {
+            let result = try context.executeFetchRequest(userFetch) as? [User]
+            return result!.first
+        } catch let error as NSError {
+            print("fetch failed: \(error)")
             return User()
         }
     }

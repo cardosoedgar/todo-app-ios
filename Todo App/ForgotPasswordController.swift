@@ -31,7 +31,7 @@ class ForgotPasswordController: UIViewController {
     }
     
     func setTapAnyWhereToDismissKeyboard() {
-        var tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         view.addGestureRecognizer(tap)
     }
     

@@ -8,7 +8,6 @@
 
 import UIKit
 import Alamofire
-import AlamofireObjectMapper
 
 class SignupController: UIViewController, UITextFieldDelegate {
 
@@ -38,7 +37,7 @@ class SignupController: UIViewController, UITextFieldDelegate {
     }
     
     func setTapAnyWhereToDismissKeyboard() {
-        var tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         view.addGestureRecognizer(tap)
     }
     
@@ -61,11 +60,13 @@ class SignupController: UIViewController, UITextFieldDelegate {
         let params = [ "email" : email, "password" : password, "name" : name ]
         
         Alamofire.request(.POST, "http://localhost:8080/signup", parameters: params)
-            .responseJSON { request, response, JSON, error in
-                if JSON == nil {
+            .responseJSON { (_, _, result) in
+                if result.isFailure {
                     self.createAlertWithTitle("Ops!", andMessage: "Can't connect to the server. Check your internet connection")
                     return
                 }
+                
+                let JSON = result.value
                 
                 if let success = JSON?.valueForKey("success") as? Bool {
                     if !success {

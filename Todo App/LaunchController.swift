@@ -16,14 +16,14 @@ class LaunchController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        var token = database.getToken()
+        let token = database.getToken()
         
         if token != nil && token != "" {
             let listsVC = storyboard?.instantiateViewControllerWithIdentifier("ListsController") as! ListsController
             listsVC.coreDataStack = coreDataStack
             navigationController?.pushViewController(listsVC, animated: true)
         } else {
-            var loginVC = storyboard?.instantiateViewControllerWithIdentifier("LoginController") as! LoginController
+            let loginVC = storyboard?.instantiateViewControllerWithIdentifier("LoginController") as! LoginController
             loginVC.coreDataStack = coreDataStack
             navigationController?.pushViewController(loginVC, animated: true)
         }

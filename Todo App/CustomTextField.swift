@@ -13,9 +13,9 @@ class CustomTextField: UITextField {
     var inset: CGFloat = 20
 
     required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        super.init(coder: aDecoder)!
         
-        var placeholderColor = UIColor(red: 190/255, green: 190/255, blue: 190/255, alpha: 1)
+        let placeholderColor = UIColor(red: 190/255, green: 190/255, blue: 190/255, alpha: 1)
         attributedPlaceholder = NSAttributedString(string:self.placeholder!, attributes:
             [NSForegroundColorAttributeName: placeholderColor])
     }
@@ -39,7 +39,7 @@ extension UITextField {
             return objc_getAssociatedObject(self, &kAssociationKeyNextField) as? UITextField
         }
         set(newField) {
-            objc_setAssociatedObject(self, &kAssociationKeyNextField, newField, UInt(OBJC_ASSOCIATION_RETAIN))
+            objc_setAssociatedObject(self, &kAssociationKeyNextField, newField, .OBJC_ASSOCIATION_RETAIN)
         }
     }
 }

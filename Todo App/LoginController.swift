@@ -38,7 +38,7 @@ class LoginController: UIViewController, SignUpProtocol, UITextFieldDelegate {
     }
     
     func setTapAnyWhereToDismissKeyboard() {
-        var tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         view.addGestureRecognizer(tap)
     }
     
@@ -75,11 +75,13 @@ class LoginController: UIViewController, SignUpProtocol, UITextFieldDelegate {
         let params = [ "email" : email, "password" : password ]
         
         Alamofire.request(.POST, "http://localhost:8080/login", parameters: params)
-            .responseJSON { request, response, JSON, error in
-                if JSON == nil {
+            .responseJSON { (_, _, result) -> Void in
+                if result.isFailure {
                     self.createAlertWithMessage("Can't connect to the server. Check your internet connection")
                     return
                 }
+                
+                let JSON = result.value
                 
                 if let success = JSON?.valueForKey("success") as? Bool {
                     if !success {
@@ -98,19 +100,19 @@ class LoginController: UIViewController, SignUpProtocol, UITextFieldDelegate {
                     
                     if let listsArray = JSON?.valueForKey("lists") as? NSArray {
                         for listDict in listsArray {
-                            var list = List.listFromJSON(listDict as! NSDictionary, andContext: self.coreDataStack.context)
+                            let list = List.listFromJSON(listDict as! NSDictionary, andContext: self.coreDataStack.context)
                             
                             if let tasksArray = listDict["Tasks"] as? NSArray {
                                 for taskDict in tasksArray {
-                                    var task = Task.taskFromJSON(taskDict as! NSDictionary, andContext: self.coreDataStack.context)
+                                    let task = Task.taskFromJSON(taskDict as! NSDictionary, andContext: self.coreDataStack.context)
                                     
-                                    var tasks = list.tasks.mutableCopy() as! NSMutableOrderedSet
+                                    let tasks = list.tasks.mutableCopy() as! NSMutableOrderedSet
                                     tasks.addObject(task)
                                     list.tasks = tasks as NSOrderedSet
                                 }
                             }
                             
-                            var lists = user.lists.mutableCopy() as! NSMutableOrderedSet
+                            let lists = user.lists.mutableCopy() as! NSMutableOrderedSet
                             lists.addObject(list)
                             user.lists = lists as NSOrderedSet
                         }

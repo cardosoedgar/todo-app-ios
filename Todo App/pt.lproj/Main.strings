@@ -1,0 +1,69 @@
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "1y3-iB-a51"; */
+"1y3-iB-a51.text" = "Label";
+
+/* Class = "UITextField"; placeholder = "Email"; ObjectID = "Iy8-nH-CkA"; */
+"Iy8-nH-CkA.placeholder" = "Email";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "J26-IR-MqN"; */
+"J26-IR-MqN.placeholder" = "Senha";
+
+/* Class = "UILabel"; text = "Another Todo App"; ObjectID = "MF0-eW-w0J"; */
+"MF0-eW-w0J.text" = "Outro Todo App";
+
+/* Class = "UIButton"; normalTitle = "Logout"; ObjectID = "ODs-jP-XNs"; */
+"ODs-jP-XNs.normalTitle" = "Logout";
+
+/* Class = "UIButton"; normalTitle = "Submit"; ObjectID = "OJM-nJ-1cJ"; */
+"OJM-nJ-1cJ.normalTitle" = "Enviar";
+
+/* Class = "UINavigationItem"; title = "Lists"; ObjectID = "QMF-RL-6vL"; */
+"QMF-RL-6vL.title" = "Listas";
+
+/* Class = "UILabel"; text = "Settings"; ObjectID = "Qc9-ld-z1z"; */
+"Qc9-ld-z1z.text" = "Configurações";
+
+/* Class = "UIButton"; normalTitle = "Submit"; ObjectID = "U2N-d8-orm"; */
+"U2N-d8-orm.normalTitle" = "Enviar";
+
+/* Class = "UILabel"; text = "Sign Up"; ObjectID = "USZ-mr-95b"; */
+"USZ-mr-95b.text" = "Cadastrar";
+
+/* Class = "UITextField"; placeholder = "Name (optional)"; ObjectID = "V7U-IQ-eBi"; */
+"V7U-IQ-eBi.placeholder" = "Nome (optional)";
+
+/* Class = "UIButton"; normalTitle = "Forgot Password?"; ObjectID = "YOo-yo-Ooj"; */
+"YOo-yo-Ooj.normalTitle" = "Esqueceu a senha?";
+
+/* Class = "UITextField"; placeholder = "Email"; ObjectID = "b3R-cM-IFD"; */
+"b3R-cM-IFD.placeholder" = "Email";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "cAn-og-0yA"; */
+"cAn-og-0yA.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "I just want to use the app"; ObjectID = "fl8-fm-6ax"; */
+"fl8-fm-6ax.normalTitle" = "Eu só quero usar o app";
+
+/* Class = "UITextField"; placeholder = "Email"; ObjectID = "gRF-WG-WhF"; */
+"gRF-WG-WhF.placeholder" = "Email";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "hT7-59-QGP"; */
+"hT7-59-QGP.placeholder" = "Senha";
+
+/* Class = "UILabel"; text = "Request New Password"; ObjectID = "jRx-eu-Lhp"; */
+"jRx-eu-Lhp.text" = "Solicitar Nova Senha";
+
+/* Class = "UIButton"; normalTitle = "Sign Up"; ObjectID = "llu-Wr-RBS"; */
+"llu-Wr-RBS.normalTitle" = "Cadastrar";
+
+/* Class = "UIButton"; normalTitle = "X"; ObjectID = "m48-yF-ugt"; */
+"m48-yF-ugt.normalTitle" = "X";
+
+/* Class = "UIButton"; normalTitle = "Sign In"; ObjectID = "nMM-cf-DD2"; */
+"nMM-cf-DD2.normalTitle" = "Logar";
+
+/* Class = "UITabBarItem"; title = "Settings"; ObjectID = "s3u-H1-Ehi"; */
+"s3u-H1-Ehi.title" = "Configurações";
+
+/* Class = "UILabel"; text = "10 tasks"; ObjectID = "t0V-gU-6lx"; */
+"t0V-gU-6lx.text" = "10 tarefas";

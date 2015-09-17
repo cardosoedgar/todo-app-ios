@@ -48,7 +48,7 @@ class SettingsController: UIViewController {
     
     func deleteUser() {
         let user = database.getUser(coreDataStack.context)
-        coreDataStack.context.deleteObject(user)
+        coreDataStack.context.deleteObject(user!)
         coreDataStack.saveContext()
     }
 }

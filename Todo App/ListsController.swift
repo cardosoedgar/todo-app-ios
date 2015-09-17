@@ -55,19 +55,32 @@ class ListsController: UITableViewController, LogoutProtocol {
     
     func createSettingsButton() -> UIBarButtonItem {
         let icon = UIImage(named: "settings_icon")
-        return UIBarButtonItem(image: icon, style: .Plain, target: self, action: "presentSettingsController")
+        return UIBarButtonItem(image: icon, style: .Plain, target: self, action: "checkUserIsLoggedIn")
     }
     
     func addNewList() {
         
     }
     
-    func presentSettingsController() {
-        var settingsVC = storyboard?.instantiateViewControllerWithIdentifier("SettingsController") as! SettingsController
+    func checkUserIsLoggedIn() {
+        let token = database.getToken()
+        if token != "not signed" {
+            openSettingsController()
+        } else {
+            openLoginController()
+        }
+    }
+    
+    func openSettingsController() {
+        let settingsVC = storyboard?.instantiateViewControllerWithIdentifier("SettingsController") as! SettingsController
         settingsVC.delegate = self
         settingsVC.coreDataStack = coreDataStack
         presentViewController(settingsVC, animated: true, completion: nil)
-
+    }
+    
+    func openLoginController() {
+        database.deleteToken()
+        navigationController?.popToRootViewControllerAnimated(true)
     }
     
     // MARK: - Logout Protocol
@@ -105,7 +118,7 @@ class ListsController: UITableViewController, LogoutProtocol {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var tasksVC = storyboard?.instantiateViewControllerWithIdentifier("TasksController") as! TasksController
+        let tasksVC = storyboard?.instantiateViewControllerWithIdentifier("TasksController") as! TasksController
         tasksVC.currentList = currentUser.lists[indexPath.row] as! List
         navigationController?.pushViewController(tasksVC, animated: true)
 
