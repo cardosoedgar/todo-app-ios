@@ -105,8 +105,8 @@ class LoginController: UIViewController, SignUpProtocol, UITextFieldDelegate {
     //MARK: - Helper Methods
     func createGenericUser() -> User? {
         let genericUser = ["id":"genericid", "name":"generic", "email" : "generic@gmail.com", "password":"generic"]
-        let user = User.fromJSON(genericUser, andContext: self.coreDataStack.context)
-        self.coreDataStack.saveContext()
+        let user = User.fromJSON(genericUser, andContext: coreDataStack.context)
+        coreDataStack.saveContext()
         return user
     }
     

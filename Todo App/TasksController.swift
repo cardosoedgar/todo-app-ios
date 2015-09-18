@@ -8,8 +8,10 @@
 
 import UIKit
 
-class TasksController: UITableViewController {
+class TasksController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+    @IBOutlet weak var textFieldAddTask: UITextField!
+    @IBOutlet weak var tableView: UITableView!
     var currentList: List!
     
     override func viewDidLoad() {
@@ -25,11 +27,6 @@ class TasksController: UITableViewController {
     func setUpNavBar() {
         title = NSLocalizedString("taskViewTitle", comment: "")
         navigationController?.navigationBarHidden = false
-        navigationItem.rightBarButtonItem = createNewListButton()
-    }
-    
-    func createNewListButton() -> UIBarButtonItem{
-        return UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addNewTask")
     }
     
     func addNewTask() {
@@ -37,11 +34,11 @@ class TasksController: UITableViewController {
     }
 
     // MARK: - Table view data source
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var numRows = 0
         
         if let list = currentList {
@@ -51,7 +48,7 @@ class TasksController: UITableViewController {
         return numRows
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("taskCell", forIndexPath: indexPath) as! TaskTableViewCell
         
         let list = currentList.tasks[indexPath.row] as! Task

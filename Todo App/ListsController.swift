@@ -29,6 +29,7 @@ class ListsController: UIViewController, UITableViewDataSource,
         
         setUpNavBar()
         setUpTextField()
+        setTapAnyWhereToDismissKeyboard()
         
         if currentUser == nil {
             loadUser()
@@ -51,7 +52,8 @@ class ListsController: UIViewController, UITableViewDataSource,
         }
         
         let params = ["name" : listName]
-        let list = currentUser.addList(params, context: self.coreDataStack.context)
+        let list = currentUser.addList(params, context: coreDataStack.context)
+        coreDataStack.saveContext()
         
         addListToTableViewLastPosition()
         scrollTableViewToLastPosition()
@@ -60,6 +62,10 @@ class ListsController: UIViewController, UITableViewDataSource,
             return
         }
         
+        addListToCloud(params, andUpdateList: list)
+    }
+    
+    func addListToCloud(params: [String:String], andUpdateList list:List) {
         Alamofire.request(.POST, "http://localhost:8080/api/list", parameters: params, headers: database.getHeader())
             .responseJSON { (_, _, result) -> Void in
                 if result.isFailure {
@@ -115,7 +121,6 @@ class ListsController: UIViewController, UITableViewDataSource,
         navigationController?.pushViewController(tasksVC, animated: true)
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        dismissKeyboard()
     }
     
     // MARK: - Logout Protocol
@@ -167,6 +172,12 @@ class ListsController: UIViewController, UITableViewDataSource,
             name: UIKeyboardWillHideNotification, object: nil)
     }
     
+    func setTapAnyWhereToDismissKeyboard() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
     func dismissKeyboard() {
         textFieldAddItem.resignFirstResponder()
     }
@@ -188,7 +199,10 @@ class ListsController: UIViewController, UITableViewDataSource,
     }
     
     func scrollTableViewToLastPosition() {
-        self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.currentUser.lists.count - 1, inSection: 0), atScrollPosition: .Bottom, animated: true)
+        let listCount = self.currentUser.lists.count
+        if listCount > 0 {
+            self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.currentUser.lists.count - 1, inSection: 0), atScrollPosition: .Bottom, animated: true)
+        }
     }
     
     func addListToTableViewLastPosition() {
@@ -198,7 +212,6 @@ class ListsController: UIViewController, UITableViewDataSource,
     
     //MARK: - Navigation
     func openSettingsController() {
-        dismissKeyboard()
         let settingsVC = storyboard?.instantiateViewControllerWithIdentifier("SettingsController") as! SettingsController
         settingsVC.delegate = self
         settingsVC.coreDataStack = coreDataStack
@@ -206,7 +219,6 @@ class ListsController: UIViewController, UITableViewDataSource,
     }
     
     func openLoginController() {
-        dismissKeyboard()
         database.deleteToken()
         navigationController?.popToRootViewControllerAnimated(true)
     }
