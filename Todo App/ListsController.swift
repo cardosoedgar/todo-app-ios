@@ -43,18 +43,22 @@ class ListsController: UIViewController, UITableViewDataSource,
     
     func addNewList() {
         let listName = textFieldAddItem.text!
+        clearTextField()
+        
         if listName == "" {
             dismissKeyboard()
             return
         }
-        
-        clearTextField()
         
         let params = ["name" : listName]
         let list = currentUser.addList(params, context: self.coreDataStack.context)
         
         addListToTableViewLastPosition()
         scrollTableViewToLastPosition()
+        
+        if !database.isUserLoggedIn() {
+            return
+        }
         
         Alamofire.request(.POST, "http://localhost:8080/api/list", parameters: params, headers: database.getHeader())
             .responseJSON { (_, _, result) -> Void in
@@ -76,7 +80,6 @@ class ListsController: UIViewController, UITableViewDataSource,
                     }
                 }
         }
-
     }
 
     // MARK: - Table view data source
@@ -136,7 +139,7 @@ class ListsController: UIViewController, UITableViewDataSource,
     
     func createSettingsButton() -> UIBarButtonItem {
         let icon = UIImage(named: "settings_icon")
-        return UIBarButtonItem(image: icon, style: .Plain, target: self, action: "checkUserIsLoggedIn")
+        return UIBarButtonItem(image: icon, style: .Plain, target: self, action: "settingsButtonPressed")
     }
     
     //MARK: - UITextFieldProtocol
@@ -168,9 +171,8 @@ class ListsController: UIViewController, UITableViewDataSource,
         textFieldAddItem.resignFirstResponder()
     }
     
-    func checkUserIsLoggedIn() {
-        let token = database.getToken()
-        if token != "not signed" {
+    func settingsButtonPressed() {
+        if database.isUserLoggedIn() {
             openSettingsController()
         } else {
             openLoginController()

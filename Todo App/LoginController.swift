@@ -12,14 +12,13 @@ import Alamofire
 class LoginController: UIViewController, SignUpProtocol, UITextFieldDelegate {
     
     var coreDataStack: CoreDataStackManager!
-    var database: DatabaseProtocol?
+    var database = UserDefaultsDatabase()
     @IBOutlet weak var tfEmail: UITextField!
     @IBOutlet weak var tfPassword: UITextField!
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        database = UserDefaultsDatabase()
         setTapAnyWhereToDismissKeyboard()
     }
     
@@ -83,8 +82,14 @@ class LoginController: UIViewController, SignUpProtocol, UITextFieldDelegate {
     
     @IBAction func dontWantToSignUp(sender: UIButton) {
         dismissKeyboard()
-        database?.setToken("not signed")
-        presentListController()
+        database.setToken("not signed")
+        
+        var user = database.getUser(self.coreDataStack.context)
+        if user == nil {
+            user = createGenericUser()
+        }
+        
+        presentListController(user!)
     }
     
     @IBAction func signUp(sender: UIButton) {
@@ -98,6 +103,13 @@ class LoginController: UIViewController, SignUpProtocol, UITextFieldDelegate {
     }
     
     //MARK: - Helper Methods
+    func createGenericUser() -> User? {
+        let genericUser = ["id":"genericid", "name":"generic", "email" : "generic@gmail.com", "password":"generic"]
+        let user = User.fromJSON(genericUser, andContext: self.coreDataStack.context)
+        self.coreDataStack.saveContext()
+        return user
+    }
+    
     func hideNavBar() {
         navigationController?.navigationBarHidden = true
     }
@@ -120,7 +132,7 @@ class LoginController: UIViewController, SignUpProtocol, UITextFieldDelegate {
     }
     
     func saveToken(token: String?) {
-        self.database?.setToken(token)
+        self.database.setToken(token)
     }
     
     //MARK: - UITextField Delegate
@@ -150,12 +162,6 @@ class LoginController: UIViewController, SignUpProtocol, UITextFieldDelegate {
         let signUpController = storyboard?.instantiateViewControllerWithIdentifier("SignUpController") as! SignupController
         signUpController.loginController = self
         navigationController?.pushViewController(signUpController, animated: true)
-    }
-    
-    func presentListController() {
-        let listsController = storyboard?.instantiateViewControllerWithIdentifier("ListsController") as! ListsController
-        listsController.coreDataStack = coreDataStack
-        navigationController?.pushViewController(listsController, animated: true)
     }
     
     func presentListController(user : User) {

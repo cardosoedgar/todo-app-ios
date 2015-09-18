@@ -8,7 +8,7 @@
 import CoreData
 import Foundation
 
-class UserDefaultsDatabase: DatabaseProtocol
+class UserDefaultsDatabase
 {
     func setToken(token: String?) {
         NSUserDefaults.standardUserDefaults().setValue(token, forKey: "token")
@@ -36,5 +36,13 @@ class UserDefaultsDatabase: DatabaseProtocol
     
     func getHeader() -> [String: String] {
         return ["x-access-token" : getToken()!]
+    }
+    
+    func isUserLoggedIn() -> Bool {
+        if getToken() == "not signed" {
+            return false
+        }
+        
+        return true
     }
 }

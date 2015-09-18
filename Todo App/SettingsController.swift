@@ -8,10 +8,6 @@
 
 import UIKit
 
-protocol LogoutProtocol: class {
-    func didLogout()
-}
-
 class SettingsController: UIViewController {
 
     var database = UserDefaultsDatabase()
