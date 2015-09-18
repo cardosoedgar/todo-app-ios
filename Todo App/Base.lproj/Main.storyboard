@@ -145,6 +145,9 @@
                                                 <constraint firstAttribute="leadingMargin" secondItem="kCP-kV-6bi" secondAttribute="leading" id="bLs-v2-T6K"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="labelName" destination="kCP-kV-6bi" id="fOT-eO-WyY"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>

@@ -25,7 +25,7 @@ class TasksController: UIViewController, UITableViewDataSource, UITableViewDeleg
     }
     
     func setUpNavBar() {
-        title = NSLocalizedString("taskViewTitle", comment: "")
+        title = currentList.name
         navigationController?.navigationBarHidden = false
     }
     
