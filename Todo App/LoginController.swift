@@ -9,10 +9,6 @@ import CoreData
 import UIKit
 import Alamofire
 
-protocol SignUpProtocol : class {
-    func setRegisteredEmail(name: String?)
-}
-
 class LoginController: UIViewController, SignUpProtocol, UITextFieldDelegate {
     
     var coreDataStack: CoreDataStackManager!
@@ -20,6 +16,7 @@ class LoginController: UIViewController, SignUpProtocol, UITextFieldDelegate {
     @IBOutlet weak var tfEmail: UITextField!
     @IBOutlet weak var tfPassword: UITextField!
     
+    //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         database = UserDefaultsDatabase()
@@ -31,21 +28,50 @@ class LoginController: UIViewController, SignUpProtocol, UITextFieldDelegate {
         hideNavBar()
     }
     
+    //MARK: - Core Methods
+    func requestLogin(email: String, password: String) {
+        let params = [ "email" : email, "password" : password ]
+        
+        Alamofire.request(.POST, "http://localhost:8080/login", parameters: params)
+            .responseJSON { (_, _, result) -> Void in
+                if result.isFailure {
+                    self.createAlertWithMessage("Can't connect to the server. Check your internet connection")
+                    return
+                }
+                
+                if let success = result.value?.valueForKey("success") as? Bool {
+                    if !success {
+                        let message = result.value?.valueForKey("message") as? String
+                        self.createAlertWithMessage(message)
+                        return
+                    }
+                    
+                    let token = result.value?.valueForKey("token") as? String
+                    self.saveToken(token)
+                    
+                    if let userDict = result.value?.valueForKey("user") as? NSDictionary{
+                        let user = User.fromJSON(userDict, andContext: self.coreDataStack.context)
+                    
+                        if let listsArray = result.value?.valueForKey("lists") as? NSArray {
+                            for listDict in listsArray {
+                                let list = user.addList(listDict as! NSDictionary, context: self.coreDataStack.context)
+                            
+                                if let tasksArray = listDict["Tasks"] as? NSArray {
+                                    for taskDict in tasksArray {
+                                        list.addTask(taskDict as! NSDictionary, context: self.coreDataStack.context)
+                                    }
+                                }
+                            }
+                        }
+                    
+                        self.coreDataStack.saveContext()
+                        self.presentListController(user)
+                    }
+                }
+        }
+    }
+    
     //MARK: - UI Components
-    
-    func hideNavBar() {
-        navigationController?.navigationBarHidden = true
-    }
-    
-    func setTapAnyWhereToDismissKeyboard() {
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
-        view.addGestureRecognizer(tap)
-    }
-    
-    func dismissKeyboard() {
-        view.endEditing(true)
-    }
-    
     @IBAction func login(sender: AnyObject?) {
         dismissKeyboard()
         if let email = tfEmail.text {
@@ -71,57 +97,18 @@ class LoginController: UIViewController, SignUpProtocol, UITextFieldDelegate {
         presentForgotPasswordController()
     }
     
-    func requestLogin(email: String, password: String) {
-        let params = [ "email" : email, "password" : password ]
-        
-        Alamofire.request(.POST, "http://localhost:8080/login", parameters: params)
-            .responseJSON { (_, _, result) -> Void in
-                if result.isFailure {
-                    self.createAlertWithMessage("Can't connect to the server. Check your internet connection")
-                    return
-                }
-                
-                let JSON = result.value
-                
-                if let success = JSON?.valueForKey("success") as? Bool {
-                    if !success {
-                        let message = JSON?.valueForKey("message") as? String
-                        self.createAlertWithMessage(message)
-                        return
-                    }
-                    
-                    let token = JSON?.valueForKey("token") as? String
-                    self.saveToken(token)
-                    
-                    var user: User!
-                    if let userDict = JSON?.valueForKey("user") as? NSDictionary{
-                        user = User.userFromJSON(userDict, andContext: self.coreDataStack.context)
-                    }
-                    
-                    if let listsArray = JSON?.valueForKey("lists") as? NSArray {
-                        for listDict in listsArray {
-                            let list = List.listFromJSON(listDict as! NSDictionary, andContext: self.coreDataStack.context)
-                            
-                            if let tasksArray = listDict["Tasks"] as? NSArray {
-                                for taskDict in tasksArray {
-                                    let task = Task.taskFromJSON(taskDict as! NSDictionary, andContext: self.coreDataStack.context)
-                                    
-                                    let tasks = list.tasks.mutableCopy() as! NSMutableOrderedSet
-                                    tasks.addObject(task)
-                                    list.tasks = tasks as NSOrderedSet
-                                }
-                            }
-                            
-                            let lists = user.lists.mutableCopy() as! NSMutableOrderedSet
-                            lists.addObject(list)
-                            user.lists = lists as NSOrderedSet
-                        }
-                    }
-                    
-                    self.coreDataStack.saveContext()
-                    self.presentListController(user)
-                }
-        }
+    //MARK: - Helper Methods
+    func hideNavBar() {
+        navigationController?.navigationBarHidden = true
+    }
+    
+    func setTapAnyWhereToDismissKeyboard() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        view.addGestureRecognizer(tap)
+    }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
     }
     
     func createAlertWithMessage(message: String?) {
@@ -137,7 +124,6 @@ class LoginController: UIViewController, SignUpProtocol, UITextFieldDelegate {
     }
     
     //MARK: - UITextField Delegate
-    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         if textField.nextField == nil {
             login(self)
@@ -149,7 +135,6 @@ class LoginController: UIViewController, SignUpProtocol, UITextFieldDelegate {
     }
     
     //MARK: - SignUp Protocol
-    
     func setRegisteredEmail(email: String?) {
         tfEmail.text = email
         tfPassword.becomeFirstResponder()

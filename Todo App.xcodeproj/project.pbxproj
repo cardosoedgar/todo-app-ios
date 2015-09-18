@@ -13,6 +13,7 @@
 		6C41A7FA1BA9ABFF00B748C1 /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C41A7F91BA9ABFF00B748C1 /* TaskTableViewCell.swift */; };
 		6C5980F21B9733990043B161 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5980F11B9733990043B161 /* SettingsController.swift */; };
 		6C5980F71B977EE00043B161 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5980F61B977EE00043B161 /* CustomTextField.swift */; };
+		6C5D76951BAC4ECF00AB3CB6 /* SignupProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5D76941BAC4ECF00AB3CB6 /* SignupProtocol.swift */; settings = {ASSET_TAGS = (); }; };
 		6C6DF4311BA854F4008CBDCC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6DF42F1BA854F4008CBDCC /* User.swift */; };
 		6C6DF4321BA854F4008CBDCC /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6DF4301BA854F4008CBDCC /* List.swift */; };
 		6C6DF4341BA8552A008CBDCC /* LaunchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6DF4331BA8552A008CBDCC /* LaunchController.swift */; };
@@ -53,6 +54,7 @@
 		6C41A7FE1BAA180600B748C1 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		6C5980F11B9733990043B161 /* SettingsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		6C5980F61B977EE00043B161 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		6C5D76941BAC4ECF00AB3CB6 /* SignupProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupProtocol.swift; sourceTree = "<group>"; };
 		6C6DF42F1BA854F4008CBDCC /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		6C6DF4301BA854F4008CBDCC /* List.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		6C6DF4331BA8552A008CBDCC /* LaunchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchController.swift; sourceTree = "<group>"; };
@@ -102,7 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				6C952B8E1B94C39000EBF38C /* DatabaseProtocol.swift */,
-				6C952B901B94C42B00EBF38C /* UserDefaultsDatabase.swift */,
+				6C5D76941BAC4ECF00AB3CB6 /* SignupProtocol.swift */,
 			);
 			name = Protocol;
 			sourceTree = "<group>";
@@ -135,6 +137,7 @@
 			children = (
 				6CB544651B9F167800E78B0B /* Model.xcdatamodeld */,
 				6CB544631B9F148700E78B0B /* CoreDataStackManager.swift */,
+				6C952B901B94C42B00EBF38C /* UserDefaultsDatabase.swift */,
 			);
 			name = CoreData;
 			sourceTree = "<group>";
@@ -385,6 +388,7 @@
 				6C0436E91B9791B300A51C35 /* ForgotPasswordController.swift in Sources */,
 				6C41A7F81BA9A7B700B748C1 /* ListsTableViewCell.swift in Sources */,
 				6C952B911B94C42B00EBF38C /* UserDefaultsDatabase.swift in Sources */,
+				6C5D76951BAC4ECF00AB3CB6 /* SignupProtocol.swift in Sources */,
 				6C6DF4361BA89D23008CBDCC /* Task.swift in Sources */,
 				6CB544671B9F167800E78B0B /* Model.xcdatamodeld in Sources */,
 				6C5980F21B9733990043B161 /* SettingsController.swift in Sources */,

@@ -33,4 +33,8 @@ class UserDefaultsDatabase: DatabaseProtocol
     func deleteToken() {
         setToken(nil)
     }
+    
+    func getHeader() -> [String: String] {
+        return ["x-access-token" : getToken()!]
+    }
 }

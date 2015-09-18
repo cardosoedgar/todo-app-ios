@@ -18,6 +18,7 @@ class SettingsController: UIViewController {
     var coreDataStack: CoreDataStackManager!
     var delegate: LogoutProtocol!
     
+    //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -29,26 +30,27 @@ class SettingsController: UIViewController {
     }
     
     //MARK: - UI Components
-    
-    func setUpNavBar() {
-        title = "Settings"
-        navigationController?.navigationBarHidden = false
-        
-    }
-
     @IBAction func closeSettings(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
     }
-
+    
     @IBAction func logout(sender: AnyObject) {
         deleteUser()
         database.deleteToken()
         delegate.didLogout()
     }
     
+    //MARK: Helper Methods
     func deleteUser() {
         let user = database.getUser(coreDataStack.context)
         coreDataStack.context.deleteObject(user!)
         coreDataStack.saveContext()
+    }
+    
+    //MARK: - set Navigation Bar
+    func setUpNavBar() {
+        title = "Settings"
+        navigationController?.navigationBarHidden = false
+        
     }
 }

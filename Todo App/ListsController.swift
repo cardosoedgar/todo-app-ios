@@ -9,7 +9,8 @@ import CoreData
 import UIKit
 import Alamofire
 
-class ListsController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, LogoutProtocol {
+class ListsController: UIViewController, UITableViewDataSource,
+                    UITableViewDelegate, UITextFieldDelegate, LogoutProtocol {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var textFieldAddItem: UITextField!
@@ -18,6 +19,7 @@ class ListsController: UIViewController, UITableViewDataSource, UITableViewDeleg
     var currentUser : User!
     var database = UserDefaultsDatabase()
     
+    //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -33,10 +35,119 @@ class ListsController: UIViewController, UITableViewDataSource, UITableViewDeleg
         }
     }
     
-    // MARK: - UI Componentes
+    // MARK: - Core Methods
+    func loadUser() {
+        currentUser = database.getUser(coreDataStack.context)
+        tableView.reloadData()
+    }
+    
+    func addNewList() {
+        let listName = textFieldAddItem.text!
+        if listName == "" {
+            dismissKeyboard()
+            return
+        }
+        
+        clearTextField()
+        
+        let params = ["name" : listName]
+        let list = currentUser.addList(params, context: self.coreDataStack.context)
+        
+        addListToTableViewLastPosition()
+        scrollTableViewToLastPosition()
+        
+        Alamofire.request(.POST, "http://localhost:8080/api/list", parameters: params, headers: database.getHeader())
+            .responseJSON { (_, _, result) -> Void in
+                if result.isFailure {
+                    self.createAlertWithMessage("Can't connect to the server. Check your internet connection")
+                    return
+                }
+                
+                if let success = result.value?.valueForKey("success") as? Bool {
+                    if !success {
+                        let message = result.value?.valueForKey("message") as? String
+                        self.createAlertWithMessage(message)
+                        return
+                    }
+                    
+                    if let listDict = result.value?.valueForKey("list") as? NSDictionary {
+                        list.updateId(listDict)
+                        self.coreDataStack.saveContext()
+                    }
+                }
+        }
+
+    }
+
+    // MARK: - Table view data source
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        var numRows = 0
+        
+        if let user = currentUser {
+            numRows = user.lists.count
+        }
+        
+        return numRows
+    }
+
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("listCell", forIndexPath: indexPath) as! ListsTableViewCell
+        
+        let list = currentUser.lists[indexPath.row] as! List
+        cell.labelName?.text = list.name
+        let tasksNumberLabel = NSLocalizedString("tasksLabel", comment: "")
+        cell.labelNumberTasks?.text = "\(list.tasks.count) \(tasksNumberLabel)"
+        
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let tasksVC = storyboard?.instantiateViewControllerWithIdentifier("TasksController") as! TasksController
+        let currentList = currentUser.lists[indexPath.row] as! List
+        tasksVC.currentList = currentList
+        navigationController?.pushViewController(tasksVC, animated: true)
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        dismissKeyboard()
+    }
+    
+    // MARK: - Logout Protocol
+    func didLogout() {
+        dismissViewControllerAnimated(true, completion: { () -> Void in
+            navigationController?.popToRootViewControllerAnimated(true)
+        })
+    }
+    
+    //MARK: - Setup Navigation Bar
+    func setUpNavBar() {
+        title = NSLocalizedString("listViewTitle", comment: "")
+        navigationController?.navigationBarHidden = false
+        addNavBarButton()
+    }
+    
+    func addNavBarButton() {
+        let settingsButton = createSettingsButton()
+        navigationItem.leftBarButtonItem = settingsButton
+    }
+    
+    func createSettingsButton() -> UIBarButtonItem {
+        let icon = UIImage(named: "settings_icon")
+        return UIBarButtonItem(image: icon, style: .Plain, target: self, action: "checkUserIsLoggedIn")
+    }
+    
+    //MARK: - UITextFieldProtocol
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         addNewList()
         return true
+    }
+    
+    //MARK: - Helper Methods
+    func clearTextField() {
+        textFieldAddItem.text = ""
     }
     
     func setUpTextField() {
@@ -57,71 +168,13 @@ class ListsController: UIViewController, UITableViewDataSource, UITableViewDeleg
         textFieldAddItem.resignFirstResponder()
     }
     
-    func loadUser() {
-        currentUser = database.getUser(coreDataStack.context)
-        tableView.reloadData()
-    }
-    
-    func setUpNavBar() {
-        title = NSLocalizedString("listViewTitle", comment: "")
-        navigationController?.navigationBarHidden = false
-        addNavBarButtons()
-    }
-    
-    func addNavBarButtons() {
-        let settingsButton = createSettingsButton()
-        navigationItem.leftBarButtonItem = settingsButton
-    }
-    
-    func createSettingsButton() -> UIBarButtonItem {
-        let icon = UIImage(named: "settings_icon")
-        return UIBarButtonItem(image: icon, style: .Plain, target: self, action: "checkUserIsLoggedIn")
-    }
-    
-    func addNewList() {
-        let listName = textFieldAddItem.text!
-        clearTextField()
-        
-        if listName == "" {
-            dismissKeyboard()
-            return
+    func checkUserIsLoggedIn() {
+        let token = database.getToken()
+        if token != "not signed" {
+            openSettingsController()
+        } else {
+            openLoginController()
         }
-        
-        let list = List.listFromJSON(["name" : listName] as NSDictionary, andContext: self.coreDataStack.context)
-        let lists = self.currentUser.lists.mutableCopy() as! NSMutableOrderedSet
-        lists.addObject(list)
-        self.currentUser.lists = lists as NSOrderedSet
-        self.coreDataStack.saveContext()
-        
-        self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.currentUser.lists.count - 1, inSection: 0)],
-            withRowAnimation: .Automatic)
-        self.scrollTableViewToLastPosition()
-        
-        let params = ["name" : listName]
-        let headers = ["x-access-token" : database.getToken()!]
-        Alamofire.request(.POST, "http://localhost:8080/api/list", parameters: params, headers: headers)
-            .responseJSON { (_, _, result) -> Void in
-                if result.isFailure {
-                    self.createAlertWithMessage("Can't connect to the server. Check your internet connection")
-                    return
-                }
-
-                let JSON = result.value
-                
-                if let success = JSON?.valueForKey("success") as? Bool {
-                    if !success {
-                        let message = JSON?.valueForKey("message") as? String
-                        self.createAlertWithMessage(message)
-                        return
-                    }
-                    
-                    if let listDict = JSON?.valueForKey("list") as? NSDictionary {
-                        list.id = listDict["id"] as? NSNumber
-                        self.coreDataStack.saveContext()
-                    }
-                }
-        }
-
     }
     
     func createAlertWithMessage(message: String?) {
@@ -132,15 +185,16 @@ class ListsController: UIViewController, UITableViewDataSource, UITableViewDeleg
         alert.show()
     }
     
-    func checkUserIsLoggedIn() {
-        let token = database.getToken()
-        if token != "not signed" {
-            openSettingsController()
-        } else {
-            openLoginController()
-        }
+    func scrollTableViewToLastPosition() {
+        self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.currentUser.lists.count - 1, inSection: 0), atScrollPosition: .Bottom, animated: true)
     }
     
+    func addListToTableViewLastPosition() {
+        self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.currentUser.lists.count - 1, inSection: 0)],
+            withRowAnimation: .Automatic)
+    }
+    
+    //MARK: - Navigation
     func openSettingsController() {
         dismissKeyboard()
         let settingsVC = storyboard?.instantiateViewControllerWithIdentifier("SettingsController") as! SettingsController
@@ -153,50 +207,6 @@ class ListsController: UIViewController, UITableViewDataSource, UITableViewDeleg
         dismissKeyboard()
         database.deleteToken()
         navigationController?.popToRootViewControllerAnimated(true)
-    }
-    
-    // MARK: - Logout Protocol
-    
-    func didLogout() {
-        dismissViewControllerAnimated(true, completion: { () -> Void in
-            navigationController?.popToRootViewControllerAnimated(true)
-        })
-    }
-
-    // MARK: - Table view data source
-
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var numRows = 0
-        
-        if let user = currentUser {
-            numRows = user.lists.count
-        }
-        
-        return numRows
-    }
-
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("listCell", forIndexPath: indexPath) as! ListsTableViewCell
-        
-        let list = currentUser.lists[indexPath.row] as! List
-        cell.labelName?.text = list.name
-        let tasksLabel = NSLocalizedString("tasksLabel", comment: "")
-        cell.labelNumberTasks?.text = "\(list.tasks.count) \(tasksLabel)" 
-        
-        return cell
-    }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let tasksVC = storyboard?.instantiateViewControllerWithIdentifier("TasksController") as! TasksController
-        tasksVC.currentList = currentUser.lists[indexPath.row] as! List
-        navigationController?.pushViewController(tasksVC, animated: true)
-        
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        dismissKeyboard()
     }
     
     //MARK: - TableView Keyboard Animations
@@ -228,14 +238,6 @@ class ListsController: UIViewController, UITableViewDataSource, UITableViewDeleg
         }
     }
     
-    func clearTextField() {
-        textFieldAddItem.text = ""
-    }
-    
-    func scrollTableViewToLastPosition() {
-        self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.currentUser.lists.count - 1, inSection: 0), atScrollPosition: .Bottom, animated: true)
-    }
-
 //    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
 //        return true
 //    }
