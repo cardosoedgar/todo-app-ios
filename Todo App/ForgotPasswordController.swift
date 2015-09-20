@@ -10,6 +10,9 @@ import UIKit
 
 class ForgotPasswordController: UIViewController {
 
+    @IBOutlet weak var textFieldEmail: CustomTextField!
+    
+    //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -19,7 +22,13 @@ class ForgotPasswordController: UIViewController {
     }
     
     //MARK: - UI Components
+    @IBAction func submitRequest(sender: AnyObject) {
+        if let email = textFieldEmail.text! {
+            //TODO Alamofire request
+        }
+    }
     
+    //MARK: - Helper Methods
     func setNavBarVisible() {
         navigationController?.navigationBarHidden = false
     }

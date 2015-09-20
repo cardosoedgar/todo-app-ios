@@ -514,6 +514,7 @@
                                 </state>
                                 <connections>
                                     <action selector="login:" destination="rBh-Vq-Q83" eventType="touchUpInside" id="1tE-Ou-88G"/>
+                                    <action selector="submitRequest:" destination="xhN-Ix-pEX" eventType="touchUpInside" id="plI-JS-2rt"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Request New Password" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jRx-eu-Lhp">
@@ -541,6 +542,9 @@
                             </mask>
                         </variation>
                     </view>
+                    <connections>
+                        <outlet property="textFieldEmail" destination="gRF-WG-WhF" id="EYy-Rf-CpI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Goz-hU-XbN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
