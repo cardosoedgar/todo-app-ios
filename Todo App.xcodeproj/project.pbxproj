@@ -11,6 +11,7 @@
 		6C0CD1F31B9879ED009B2EBE /* SignupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0CD1F21B9879ED009B2EBE /* SignupController.swift */; };
 		6C41A7F81BA9A7B700B748C1 /* ListsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C41A7F71BA9A7B700B748C1 /* ListsTableViewCell.swift */; };
 		6C41A7FA1BA9ABFF00B748C1 /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C41A7F91BA9ABFF00B748C1 /* TaskTableViewCell.swift */; };
+		6C457F9E1BB08B1B0000D945 /* UpdateTaskCountProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C457F9D1BB08B1B0000D945 /* UpdateTaskCountProtocol.swift */; settings = {ASSET_TAGS = (); }; };
 		6C5980F21B9733990043B161 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5980F11B9733990043B161 /* SettingsController.swift */; };
 		6C5980F71B977EE00043B161 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5980F61B977EE00043B161 /* CustomTextField.swift */; };
 		6C5D76951BAC4ECF00AB3CB6 /* SignupProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5D76941BAC4ECF00AB3CB6 /* SignupProtocol.swift */; settings = {ASSET_TAGS = (); }; };
@@ -52,6 +53,7 @@
 		6C41A7F91BA9ABFF00B748C1 /* TaskTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 		6C41A7FD1BAA180600B748C1 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Main.strings; sourceTree = "<group>"; };
 		6C41A7FE1BAA180600B748C1 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		6C457F9D1BB08B1B0000D945 /* UpdateTaskCountProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateTaskCountProtocol.swift; sourceTree = "<group>"; };
 		6C5980F11B9733990043B161 /* SettingsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		6C5980F61B977EE00043B161 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		6C5D76941BAC4ECF00AB3CB6 /* SignupProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupProtocol.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 			children = (
 				6C5D76941BAC4ECF00AB3CB6 /* SignupProtocol.swift */,
 				6C5D76961BAC56AA00AB3CB6 /* LogoutProtocol.swift */,
+				6C457F9D1BB08B1B0000D945 /* UpdateTaskCountProtocol.swift */,
 			);
 			name = Protocol;
 			sourceTree = "<group>";
@@ -380,6 +383,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6C5D76971BAC56AA00AB3CB6 /* LogoutProtocol.swift in Sources */,
+				6C457F9E1BB08B1B0000D945 /* UpdateTaskCountProtocol.swift in Sources */,
 				6C6DF4341BA8552A008CBDCC /* LaunchController.swift in Sources */,
 				6C5980F71B977EE00043B161 /* CustomTextField.swift in Sources */,
 				6C41A7FA1BA9ABFF00B748C1 /* TaskTableViewCell.swift in Sources */,

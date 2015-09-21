@@ -23,9 +23,9 @@ class ForgotPasswordController: UIViewController {
     
     //MARK: - UI Components
     @IBAction func submitRequest(sender: AnyObject) {
-        if let email = textFieldEmail.text! {
-            //TODO Alamofire request
-        }
+//        if let email = textFieldEmail.text {
+//            //TODO Alamofire request
+//        }
     }
     
     //MARK: - Helper Methods

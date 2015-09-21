@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 
 class ListsController: UIViewController, UITableViewDataSource,
-                    UITableViewDelegate, UITextFieldDelegate, LogoutProtocol {
+                    UITableViewDelegate, UITextFieldDelegate, LogoutProtocol, UpdateTaskCountProtocol {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var textFieldAddItem: UITextField!
@@ -30,10 +30,15 @@ class ListsController: UIViewController, UITableViewDataSource,
         setUpNavBar()
         setUpTextField()
         setTapAnyWhereToDismissKeyboard()
+        addTextFieldObservers()
         
         if currentUser == nil {
             loadUser()
         }
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        removeTextFieldObservers()
     }
     
     // MARK: - Core Methods
@@ -117,7 +122,9 @@ class ListsController: UIViewController, UITableViewDataSource,
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let tasksVC = storyboard?.instantiateViewControllerWithIdentifier("TasksController") as! TasksController
         let currentList = currentUser.lists[indexPath.row] as! List
+        tasksVC.delegate = self
         tasksVC.currentList = currentList
+        tasksVC.coreDataStack = coreDataStack
         navigationController?.pushViewController(tasksVC, animated: true)
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -153,6 +160,19 @@ class ListsController: UIViewController, UITableViewDataSource,
         return true
     }
     
+    //MARK: - UpdateTaskCountProtocol
+    func updateTaskCountInList(list: List) {
+        var index = 0
+        for aux in currentUser.lists {
+            if list.name == aux.name {
+                index = list.tasks.count
+            }
+        }
+        
+        tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)],
+                                                                withRowAnimation: .None)
+    }
+    
     //MARK: - Helper Methods
     func clearTextField() {
         textFieldAddItem.text = ""
@@ -161,7 +181,6 @@ class ListsController: UIViewController, UITableViewDataSource,
     func setUpTextField() {
         textFieldAddItem.delegate = self
         textFieldAddItem.placeholder = NSLocalizedString("addListPlaceholder", comment: "")
-        addTextFieldObservers()
     }
     
     func addTextFieldObservers() {
@@ -170,6 +189,10 @@ class ListsController: UIViewController, UITableViewDataSource,
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"),
             name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    func removeTextFieldObservers() {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     func setTapAnyWhereToDismissKeyboard() {

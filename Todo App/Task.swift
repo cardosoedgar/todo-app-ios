@@ -11,7 +11,7 @@ import CoreData
 
 class Task: NSManagedObject {
 
-    @NSManaged var id: NSNumber
+    @NSManaged var id: NSNumber?
     @NSManaged var name: String
     @NSManaged var list: List
 
@@ -19,9 +19,13 @@ class Task: NSManagedObject {
         let taskEntity = NSEntityDescription.entityForName("Task", inManagedObjectContext: context)
         let task = Task(entity: taskEntity!, insertIntoManagedObjectContext: context)
         
-        task.id = json["id"] as! NSNumber
+        task.id = json["id"] as? NSNumber
         task.name = json["name"] as! String
         
         return task
+    }
+    
+    func updateId(json: NSDictionary) {
+        id = json["id"] as? NSNumber
     }
 }
