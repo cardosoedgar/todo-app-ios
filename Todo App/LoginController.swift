@@ -38,6 +38,8 @@ class LoginController: UIViewController, SignUpProtocol, UITextFieldDelegate {
                     return
                 }
                 
+                print(result.value)
+                
                 if let success = result.value?.valueForKey("success") as? Bool {
                     if !success {
                         let message = result.value?.valueForKey("message") as? String

@@ -103,11 +103,48 @@ class TasksController: UIViewController, UITableViewDataSource, UITableViewDeleg
         let list = currentList.tasks[indexPath.row] as! Task
         cell.labelName?.text = list.name
         
+        if(list.done) {
+            cell.markAsDone()
+        } else {
+            cell.markAsUndone()
+        }
+        
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
+    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        let task = self.currentList.tasks[indexPath.row] as! Task
+        
+        let delete = UITableViewRowAction(style: .Normal, title: "Delete") { (action, index) -> Void in
+            self.deleteTask(task)
+            self.coreDataStack.saveContext()
+            self.deleteRowAtIndex(indexPath)
+            self.delegate.updateTaskCountInList(self.currentList)
+        }
+        delete.backgroundColor = UIColor.redColor()
+        
+        let rename = UITableViewRowAction(style: .Normal, title: "Edit") { (action, index) -> Void in
+            
+        }
+        rename.backgroundColor = UIColor.orangeColor()
+        
+        let markDone = UITableViewRowAction(style: .Normal, title: markDoneTitle(task)) { (action, index) -> Void in
+            if task.done {
+                task.markUndone()
+            } else {
+                task.markAsDone()
+            }
+            
+            self.coreDataStack.saveContext()
+            self.reloadRowAtIndex(indexPath)
+        }
+        markDone.backgroundColor = UIColor(red: 255/255, green: 184/255, blue: 162/255, alpha: 1)
+        
+        return [delete, rename, markDone]
     }
     
     //MARK: - Text Field Helpers
@@ -132,6 +169,29 @@ class TasksController: UIViewController, UITableViewDataSource, UITableViewDeleg
     }
     
     //MARK: - Helper Methods
+    func deleteTask(task: Task) {
+        let tasks = self.currentList.tasks as! NSMutableOrderedSet
+        tasks.removeObject(task)
+        self.currentList.tasks = tasks as NSOrderedSet
+        self.coreDataStack.context.deleteObject(task)
+    }
+    
+    func deleteRowAtIndex(indexPath: NSIndexPath) {
+        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+    }
+    
+    func reloadRowAtIndex(indexPath: NSIndexPath) {
+        tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+    }
+    
+    func markDoneTitle(task: Task) -> String{
+        if task.done {
+            return "Undone"
+        } else {
+            return "Done"
+        }
+    }
+    
     func clearTextField() {
         textFieldAddTask.text = ""
     }

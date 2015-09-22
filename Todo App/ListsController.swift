@@ -130,6 +130,25 @@ class ListsController: UIViewController, UITableViewDataSource,
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
+    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        let delete = UITableViewRowAction(style: .Normal, title: "Delete") { (action, index) -> Void in
+            print("delete action")
+        }
+        delete.backgroundColor = UIColor.redColor()
+        
+        let rename = UITableViewRowAction(style: .Normal, title: "Edit") { (action, index) -> Void in
+            print("edit")
+        }
+        rename.backgroundColor = UIColor.orangeColor()
+        
+        let markDone = UITableViewRowAction(style: .Normal, title: "Done") { (action, index) -> Void in
+            print("Done")
+        }
+        markDone.backgroundColor = UIColor(red: 255/255, green: 184/255, blue: 162/255, alpha: 1)
+        
+        return [delete, rename, markDone]
+    }
+    
     // MARK: - Logout Protocol
     func didLogout() {
         dismissViewControllerAnimated(true, completion: { () -> Void in
@@ -163,9 +182,10 @@ class ListsController: UIViewController, UITableViewDataSource,
     //MARK: - UpdateTaskCountProtocol
     func updateTaskCountInList(list: List) {
         var index = 0
-        for aux in currentUser.lists {
-            if list.name == aux.name {
-                index = list.tasks.count
+        for var i=0; i < currentUser.lists.count; i++ {
+            let aux = currentUser.lists[i] as! List
+            if list.id == aux.id {
+                index = i
             }
         }
         
@@ -274,16 +294,4 @@ class ListsController: UIViewController, UITableViewDataSource,
             self.tableView.scrollIndicatorInsets = UIEdgeInsetsZero
         }
     }
-    
-//    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-//        return true
-//    }
-//    
-//    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-//        if editingStyle == .Delete {
-//            user.lists.removeAtIndex(indexPath.row)
-//            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-//        } else if editingStyle == .Insert {
-//        }
-//    }
 }
