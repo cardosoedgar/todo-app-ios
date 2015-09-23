@@ -81,6 +81,29 @@ class TasksController: UIViewController, UITableViewDataSource, UITableViewDeleg
                 }
         }
     }
+    
+    func markTaskDoneAtCloud(task: Task) {
+        let url = "http://localhost:8080/api/list/\(currentList.id!)/task/\(task.id!)"
+        Alamofire.request(.PUT, url, parameters: ["done":task.done], headers: database.getHeader())
+            .responseJSON { (_,_, result) -> Void in
+                if result.isFailure {
+                    self.createAlertWithMessage("Can't connect to the server. Check your internet connection")
+                    return
+                }
+        }
+    }
+    
+    func deleteTaskAtCloud(task: Task) {
+        let url = "http://localhost:8080/api/list/\(currentList.id!)/task/\(task.id!)"
+        Alamofire.request(.DELETE, url, headers: database.getHeader())
+            .responseJSON { (_,_, result) -> Void in
+                if result.isFailure {
+                    self.createAlertWithMessage("Can't connect to the server. Check your internet connection")
+                    return
+                }
+        }
+
+    }
 
     // MARK: - Table view data source
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -120,6 +143,7 @@ class TasksController: UIViewController, UITableViewDataSource, UITableViewDeleg
         let task = self.currentList.tasks[indexPath.row] as! Task
         
         let delete = UITableViewRowAction(style: .Normal, title: "Delete") { (action, index) -> Void in
+            self.deleteTaskAtCloud(task)
             self.deleteTask(task)
             self.coreDataStack.saveContext()
             self.deleteRowAtIndex(indexPath)
@@ -135,8 +159,10 @@ class TasksController: UIViewController, UITableViewDataSource, UITableViewDeleg
         let markDone = UITableViewRowAction(style: .Normal, title: markDoneTitle(task)) { (action, index) -> Void in
             if task.done {
                 task.markUndone()
+                self.markTaskDoneAtCloud(task)
             } else {
                 task.markAsDone()
+                self.markTaskDoneAtCloud(task)
             }
             
             self.coreDataStack.saveContext()
