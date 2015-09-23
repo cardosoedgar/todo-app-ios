@@ -143,7 +143,10 @@ class TasksController: UIViewController, UITableViewDataSource, UITableViewDeleg
         let task = self.currentList.tasks[indexPath.row] as! Task
         
         let delete = UITableViewRowAction(style: .Normal, title: "Delete") { (action, index) -> Void in
-            self.deleteTaskAtCloud(task)
+            if self.database.isUserLoggedIn() {
+                self.deleteTaskAtCloud(task)
+            }
+            
             self.deleteTask(task)
             self.coreDataStack.saveContext()
             self.deleteRowAtIndex(indexPath)
@@ -158,11 +161,9 @@ class TasksController: UIViewController, UITableViewDataSource, UITableViewDeleg
         
         let markDone = UITableViewRowAction(style: .Normal, title: markDoneTitle(task)) { (action, index) -> Void in
             if task.done {
-                task.markUndone()
-                self.markTaskDoneAtCloud(task)
+                self.markTaskUndone(task)
             } else {
-                task.markAsDone()
-                self.markTaskDoneAtCloud(task)
+                self.markTaskDone(task)
             }
             
             self.coreDataStack.saveContext()
@@ -195,6 +196,20 @@ class TasksController: UIViewController, UITableViewDataSource, UITableViewDeleg
     }
     
     //MARK: - Helper Methods
+    func markTaskUndone(task: Task) {
+        task.markUndone()
+        if database.isUserLoggedIn() {
+            self.markTaskDoneAtCloud(task)
+        }
+    }
+    
+    func markTaskDone(task: Task) {
+        task.markAsDone()
+        if database.isUserLoggedIn() {
+            self.markTaskDoneAtCloud(task)
+        }
+    }
+    
     func deleteTask(task: Task) {
         let tasks = currentList.tasks as! NSMutableOrderedSet
         tasks.removeObject(task)

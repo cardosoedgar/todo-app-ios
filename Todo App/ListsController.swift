@@ -146,7 +146,10 @@ class ListsController: UIViewController, UITableViewDataSource,
         let list = self.currentUser.lists[indexPath.row] as! List
         
         let delete = UITableViewRowAction(style: .Normal, title: "Delete") { (action, index) -> Void in
-            self.deleteListAtCloud(list)
+            if self.database.isUserLoggedIn() {
+                self.deleteListAtCloud(list)
+            }
+            
             self.deleteList(list)
             self.coreDataStack.saveContext()
             self.deleteRowAtIndex(indexPath)
