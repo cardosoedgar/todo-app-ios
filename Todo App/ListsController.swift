@@ -92,6 +92,18 @@ class ListsController: UIViewController, UITableViewDataSource,
                 }
         }
     }
+    
+    func deleteListAtCloud(list: List) {
+        let url = "http://localhost:8080/api/list/\(list.id!)"
+        Alamofire.request(.DELETE, url, headers: database.getHeader())
+            .responseJSON { (_,_, result) -> Void in
+                if result.isFailure {
+                    self.createAlertWithMessage("Can't connect to the server. Check your internet connection")
+                    return
+                }
+        }
+        
+    }
 
     // MARK: - Table view data source
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -131,8 +143,13 @@ class ListsController: UIViewController, UITableViewDataSource,
     }
     
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        let list = self.currentUser.lists[indexPath.row] as! List
+        
         let delete = UITableViewRowAction(style: .Normal, title: "Delete") { (action, index) -> Void in
-            print("delete action")
+            self.deleteListAtCloud(list)
+            self.deleteList(list)
+            self.coreDataStack.saveContext()
+            self.deleteRowAtIndex(indexPath)
         }
         delete.backgroundColor = UIColor.redColor()
         
@@ -194,6 +211,17 @@ class ListsController: UIViewController, UITableViewDataSource,
     }
     
     //MARK: - Helper Methods
+    func deleteRowAtIndex(indexPath: NSIndexPath) {
+        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+    }
+    
+    func deleteList(list: List) {
+        let lists = currentUser.lists as! NSMutableOrderedSet
+        lists.removeObject(list)
+        currentUser.lists = lists as NSOrderedSet
+        coreDataStack.context.deleteObject(list)
+    }
+    
     func clearTextField() {
         textFieldAddItem.text = ""
     }

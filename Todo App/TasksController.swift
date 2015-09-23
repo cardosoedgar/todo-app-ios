@@ -196,10 +196,10 @@ class TasksController: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     //MARK: - Helper Methods
     func deleteTask(task: Task) {
-        let tasks = self.currentList.tasks as! NSMutableOrderedSet
+        let tasks = currentList.tasks as! NSMutableOrderedSet
         tasks.removeObject(task)
-        self.currentList.tasks = tasks as NSOrderedSet
-        self.coreDataStack.context.deleteObject(task)
+        currentList.tasks = tasks as NSOrderedSet
+        coreDataStack.context.deleteObject(task)
     }
     
     func deleteRowAtIndex(indexPath: NSIndexPath) {
