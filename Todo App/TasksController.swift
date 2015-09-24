@@ -55,6 +55,10 @@ class TasksController: UIViewController, UITableViewDataSource, UITableViewDeleg
             return
         }
         
+        if !database.isAutoBackupOn() {
+            return
+        }
+        
         addTaskToCloud(params, andUpdateList: task)
     }
     
@@ -143,7 +147,7 @@ class TasksController: UIViewController, UITableViewDataSource, UITableViewDeleg
         let task = self.currentList.tasks[indexPath.row] as! Task
         
         let delete = UITableViewRowAction(style: .Normal, title: "Delete") { (action, index) -> Void in
-            if self.database.isUserLoggedIn() {
+            if self.database.isUserLoggedIn() && self.database.isAutoBackupOn() {
                 self.deleteTaskAtCloud(task)
             }
             
@@ -198,14 +202,14 @@ class TasksController: UIViewController, UITableViewDataSource, UITableViewDeleg
     //MARK: - Helper Methods
     func markTaskUndone(task: Task) {
         task.markUndone()
-        if database.isUserLoggedIn() {
+        if database.isUserLoggedIn() && database.isAutoBackupOn() {
             self.markTaskDoneAtCloud(task)
         }
     }
     
     func markTaskDone(task: Task) {
         task.markAsDone()
-        if database.isUserLoggedIn() {
+        if database.isUserLoggedIn() && database.isAutoBackupOn() {
             self.markTaskDoneAtCloud(task)
         }
     }

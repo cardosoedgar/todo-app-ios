@@ -203,8 +203,8 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qc9-ld-z1z">
-                                <rect key="frame" x="267" y="28" width="67" height="21"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                                <rect key="frame" x="253" y="28" width="95" height="29"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="24"/>
                                 <color key="textColor" red="1" green="0.52145291910000002" blue="0.3728048243" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -233,22 +233,39 @@
                                     <action selector="logout:" destination="A8f-dc-f7j" eventType="touchUpInside" id="2Pb-mx-LZd"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sync lists automatically" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vaB-m2-lSB">
+                                <rect key="frame" x="20" y="112" width="503" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" red="0.4549019608" green="0.30980392159999998" blue="0.27058823529999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8IT-Rw-y1n">
+                                <rect key="frame" x="531" y="109" width="51" height="31"/>
+                                <color key="onTintColor" red="1" green="0.52145291910000002" blue="0.3728048243" alpha="1" colorSpace="calibratedRGB"/>
+                            </switch>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="leadingMargin" secondItem="vaB-m2-lSB" secondAttribute="leading" id="6lP-4k-1Ng"/>
                             <constraint firstItem="ODs-jP-XNs" firstAttribute="leading" secondItem="S9F-ny-Zp1" secondAttribute="leading" id="8d3-1s-z1E"/>
                             <constraint firstItem="m48-yF-ugt" firstAttribute="trailing" secondItem="S9F-ny-Zp1" secondAttribute="trailingMargin" id="8nx-gN-B9Y"/>
                             <constraint firstItem="Qc9-ld-z1z" firstAttribute="top" secondItem="FAN-Kv-Kjd" secondAttribute="bottom" constant="8" id="AWg-Qg-PZF"/>
                             <constraint firstAttribute="trailing" secondItem="ODs-jP-XNs" secondAttribute="trailing" id="EAw-41-9hc"/>
+                            <constraint firstItem="8IT-Rw-y1n" firstAttribute="leading" secondItem="vaB-m2-lSB" secondAttribute="trailing" constant="8" id="Es7-Wx-EVN"/>
                             <constraint firstItem="qjn-2d-yqM" firstAttribute="top" secondItem="ODs-jP-XNs" secondAttribute="bottom" id="ILl-ye-ccb"/>
+                            <constraint firstItem="8IT-Rw-y1n" firstAttribute="baseline" secondItem="vaB-m2-lSB" secondAttribute="baseline" id="Idt-qy-uON"/>
+                            <constraint firstItem="8IT-Rw-y1n" firstAttribute="centerY" secondItem="vaB-m2-lSB" secondAttribute="centerY" id="KbI-Ps-rbX"/>
                             <constraint firstAttribute="centerX" secondItem="Qc9-ld-z1z" secondAttribute="centerX" id="Mwt-Gh-Ylt"/>
                             <constraint firstAttribute="trailing" secondItem="m48-yF-ugt" secondAttribute="trailing" constant="8" id="P8D-Tm-fHM"/>
                             <constraint firstItem="ODs-jP-XNs" firstAttribute="trailing" secondItem="S9F-ny-Zp1" secondAttribute="trailingMargin" id="TCm-1B-wVX"/>
                             <constraint firstItem="m48-yF-ugt" firstAttribute="top" secondItem="FAN-Kv-Kjd" secondAttribute="bottom" id="eee-vH-G6W"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="8IT-Rw-y1n" secondAttribute="trailing" id="j4f-zR-sue"/>
                             <constraint firstItem="ODs-jP-XNs" firstAttribute="leading" secondItem="S9F-ny-Zp1" secondAttribute="leadingMargin" id="sp5-cT-l78"/>
+                            <constraint firstItem="vaB-m2-lSB" firstAttribute="top" secondItem="Qc9-ld-z1z" secondAttribute="bottom" constant="55" id="xDl-aD-0Ec"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="Idt-qy-uON"/>
                                 <exclude reference="TCm-1B-wVX"/>
                                 <exclude reference="sp5-cT-l78"/>
                                 <exclude reference="8nx-gN-B9Y"/>
@@ -256,6 +273,9 @@
                         </variation>
                     </view>
                     <tabBarItem key="tabBarItem" title="Settings" image="settings_icon" id="s3u-H1-Ehi"/>
+                    <connections>
+                        <outlet property="switchAutoBackup" destination="8IT-Rw-y1n" id="MfU-hH-b5D"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lmH-RD-D9j" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

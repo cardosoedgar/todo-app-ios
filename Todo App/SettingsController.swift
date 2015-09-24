@@ -9,6 +9,8 @@
 import UIKit
 
 class SettingsController: UIViewController {
+    
+    @IBOutlet weak var switchAutoBackup: UISwitch!
 
     var database = UserDefaultsDatabase()
     var coreDataStack: CoreDataStackManager!
@@ -22,7 +24,21 @@ class SettingsController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        setUpSwitchAutoBackup()
         setUpNavBar()
+    }
+    
+    func setUpSwitchAutoBackup() {
+        switchAutoBackup.on = database.isAutoBackupOn()
+        switchAutoBackup.addTarget(self, action: "switchAutoBackupValueChanged:", forControlEvents: .ValueChanged)
+    }
+    
+    func switchAutoBackupValueChanged(sender: UISwitch) {
+        if sender.on {
+            database.toggleAutoBackup(true)
+        } else {
+            database.toggleAutoBackup(false)
+        }
     }
     
     //MARK: - UI Components

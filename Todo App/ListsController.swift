@@ -27,6 +27,11 @@ class ListsController: UIViewController, UITableViewDataSource,
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        if database.isUserLoggedIn() && database.isFirstTime(){
+            database.setFirstTime()
+            askUserToAutoBackup()
+        }
+        
         setUpNavBar()
         setUpTextField()
         setTapAnyWhereToDismissKeyboard()
@@ -64,6 +69,10 @@ class ListsController: UIViewController, UITableViewDataSource,
         scrollTableViewToLastPosition()
         
         if !database.isUserLoggedIn() {
+            return
+        }
+        
+        if !database.isAutoBackupOn() {
             return
         }
         
@@ -146,7 +155,7 @@ class ListsController: UIViewController, UITableViewDataSource,
         let list = self.currentUser.lists[indexPath.row] as! List
         
         let delete = UITableViewRowAction(style: .Normal, title: "Delete") { (action, index) -> Void in
-            if self.database.isUserLoggedIn() {
+            if self.database.isUserLoggedIn() && self.database.isAutoBackupOn() {
                 self.deleteListAtCloud(list)
             }
             
@@ -214,6 +223,23 @@ class ListsController: UIViewController, UITableViewDataSource,
     }
     
     //MARK: - Helper Methods
+    func askUserToAutoBackup() {
+        let alert = UIAlertController(title: "Automatically Backup?", message: "You can set this later", preferredStyle: .Alert)
+        
+        let yesAction = UIAlertAction(title: "Yes", style: .Default) { UIAlertAction in
+            self.database.toggleAutoBackup(true)
+        }
+        
+        let noAction = UIAlertAction(title: "No, Thanks", style: .Cancel) { UIAlertAction in
+            self.database.toggleAutoBackup(false)
+        }
+        
+        alert.addAction(yesAction)
+        alert.addAction(noAction)
+        
+        presentViewController(alert, animated: true, completion: nil)
+    }
+    
     func deleteRowAtIndex(indexPath: NSIndexPath) {
         tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
     }
@@ -257,7 +283,7 @@ class ListsController: UIViewController, UITableViewDataSource,
     }
     
     func settingsButtonPressed() {
-        if database.isUserLoggedIn() {
+        if database.isUserLoggedIn(){
             openSettingsController()
         } else {
             openLoginController()

@@ -18,6 +18,26 @@ class UserDefaultsDatabase
         return NSUserDefaults.standardUserDefaults().valueForKey("token") as? String
     }
     
+    func toggleAutoBackup(isOn: Bool) {
+        NSUserDefaults.standardUserDefaults().setValue(isOn, forKey: "autobackup")
+    }
+    
+    func isAutoBackupOn() -> Bool {
+        return NSUserDefaults.standardUserDefaults().valueForKey("autobackup") as! Bool
+    }
+    
+    func isFirstTime() -> Bool {
+        if (NSUserDefaults.standardUserDefaults().valueForKey("firsttime") as? Bool == nil) {
+            return true
+        }
+        
+        return false
+    }
+    
+    func setFirstTime() {
+        NSUserDefaults.standardUserDefaults().setValue(false, forKey: "firsttime")
+    }
+    
     func getUser(context: NSManagedObjectContext) -> User? {
         let userFetch = NSFetchRequest(entityName: "User")
         
